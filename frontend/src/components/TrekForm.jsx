@@ -37,7 +37,7 @@ const TrekForm = ({ onTrekCreated }) => {
     Object.keys(values).forEach(key => formData.append(key, values[key]));
     formData.append('image', image);
     try {
-      await axios.post('http://localhost:5000/api/treks', formData, { headers: { 'Authorization': `Bearer ${user.token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks`, formData, { headers: { 'Authorization': `Bearer ${user.token}` } });
       setValues({ name: '', state: '', difficulty: 'Moderate', duration: '', maxAltitude: '', description: '', lat: '', lng: '' });
       setImage(null);
       if (onTrekCreated) onTrekCreated();

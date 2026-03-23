@@ -56,7 +56,7 @@ const Home = () => {
       if (durationFilter && durationFilter !== 'all') params.append('duration', durationFilter);
       if (sort) params.append('sort', sort);
       if (coords) { params.append('lat', coords.lat); params.append('lng', coords.lng); }
-      const res = await axios.get(`http://localhost:5000/api/treks?${params.toString()}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks?${params.toString()}`);
       setTreks(res.data);
     } catch (err) {
       console.error("Fetch failed:", err);

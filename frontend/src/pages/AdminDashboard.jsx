@@ -31,8 +31,8 @@ const AdminDashboard = () => {
       try {
         const cfg = { headers: { 'Authorization': `Bearer ${user.token}` } };
         const [bookRes, modRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/bookings', cfg),
-          axios.get('http://localhost:5000/api/reviews/reported', cfg),
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/bookings`, cfg),
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/reported`, cfg),
         ]);
         setBookings(bookRes.data);
         setReportedReviews(modRes.data);
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
 
   const handleBookingClear = async (id) => {
     try {
-      await axios.patch(`http://localhost:5000/api/admin/bookings/${id}/clear`, {}, { headers: { 'Authorization': `Bearer ${user.token}` } });
+      await axios.patch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/bookings/${id}/clear`, {}, { headers: { 'Authorization': `Bearer ${user.token}` } });
       setBookings(prev => prev.filter(b => b._id !== id));
     } catch { alert('Could not clear booking.'); }
   };
@@ -52,8 +52,8 @@ const AdminDashboard = () => {
   const handleReviewAction = async (id, action) => {
     const cfg = { headers: { 'Authorization': `Bearer ${user.token}` } };
     try {
-      if (action === 'delete') await axios.delete(`http://localhost:5000/api/reviews/${id}`, cfg);
-      else await axios.patch(`http://localhost:5000/api/reviews/${id}/resolve`, {}, cfg);
+      if (action === 'delete') await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}`, cfg);
+      else await axios.patch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}/resolve`, {}, cfg);
       setReportedReviews(prev => prev.filter(r => r._id !== id));
     } catch { alert('Moderation failed.'); }
   };

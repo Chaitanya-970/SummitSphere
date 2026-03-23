@@ -14,7 +14,7 @@ const BookingForm = ({ trekId, trekName }) => {
     if (!user) return;
     setStatus('loading');
     try {
-      await axios.post('http://localhost:5000/api/bookings', { ...formData, trekId, trekName, email: user.email }, { headers: { 'Authorization': `Bearer ${user.token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings`, { ...formData, trekId, trekName, email: user.email }, { headers: { 'Authorization': `Bearer ${user.token}` } });
       setStatus('success');
     } catch (err) { console.log(err); setStatus('error'); }
   };

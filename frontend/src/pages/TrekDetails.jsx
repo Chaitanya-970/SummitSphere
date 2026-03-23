@@ -87,7 +87,7 @@ const ReviewCard = ({ review, user, refresh, setToast, onOpenPhotos }) => {
   if (!review) return null;
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/reviews/${review._id}`, { headers: { Authorization: `Bearer ${user.token}` } });
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${review._id}`, { headers: { Authorization: `Bearer ${user.token}` } });
       setToast({ show: true, message: 'Review deleted.', variant: 'success' });
       refresh();
     } catch (err) { setToast({ show: true, message: 'Delete failed.', variant: 'error' }); }
@@ -168,9 +168,9 @@ const TrekDetails = () => {
     try {
       const config = user ? { headers: { Authorization: `Bearer ${user.token}` } } : {};
       const [trekRes, reviewRes, bookmarkRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/treks/${id}`, config),
-        axios.get(`http://localhost:5000/api/reviews/trek/${id}`),
-        user ? axios.get(`http://localhost:5000/api/bookmarks`, config) : Promise.resolve({ data: [] })
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${id}`, config),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/trek/${id}`),
+        user ? axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookmarks`, config) : Promise.resolve({ data: [] })
       ]);
       setTrek(trekRes.data); setReviews(reviewRes.data);
       document.title = `${trekRes.data.name} — SummitSphere`;
@@ -187,10 +187,10 @@ const TrekDetails = () => {
     if (!user) return setToast({ show: true, message: 'Login to save treks!', variant: 'error' });
     try {
       if (isBookmarked) {
-        await axios.delete(`http://localhost:5000/api/bookmarks/${id}`, { headers: { Authorization: `Bearer ${user.token}` } });
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookmarks/${id}`, { headers: { Authorization: `Bearer ${user.token}` } });
         setIsBookmarked(false); setToast({ show: true, message: 'Removed from saved.', variant: 'success' });
       } else {
-        await axios.post(`http://localhost:5000/api/bookmarks`, { trekId: id }, { headers: { Authorization: `Bearer ${user.token}` } });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookmarks`, { trekId: id }, { headers: { Authorization: `Bearer ${user.token}` } });
         setIsBookmarked(true); setToast({ show: true, message: 'Trek saved!', variant: 'success' });
       }
     } catch (err) { setToast({ show: true, message: 'Action failed.', variant: 'error' }); }
@@ -199,7 +199,7 @@ const TrekDetails = () => {
   const handleDelete = async () => {
     if (!window.confirm('Delete this trek permanently?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/treks/${trek._id}`, { headers: { Authorization: `Bearer ${user.token}` } });
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${trek._id}`, { headers: { Authorization: `Bearer ${user.token}` } });
       navigate('/');
     } catch (err) { setToast({ show: true, message: 'Delete failed.', variant: 'error' }); }
   };

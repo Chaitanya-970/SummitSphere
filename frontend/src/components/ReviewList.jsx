@@ -118,7 +118,7 @@ const ReviewList = ({ reviews, setReviews }) => {
   const handleReport = async (reviewId) => {
     if (!user) return alert('Login to report reviews.');
     try {
-      const res = await axios.patch(`http://localhost:5000/api/reviews/${reviewId}/report`, {}, {
+      const res = await axios.patch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${reviewId}/report`, {}, {
         headers: { 'Authorization': `Bearer ${user.token}` }
       });
       if (res.status === 200) setReportStatus(prev => ({ ...prev, [reviewId]: true }));
@@ -128,7 +128,7 @@ const ReviewList = ({ reviews, setReviews }) => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this review?')) return;
     try {
-      const res = await axios.delete(`http://localhost:5000/api/reviews/${id}`, {
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews/${id}`, {
         headers: { 'Authorization': `Bearer ${user.token}` }
       });
       if (res.status === 200) setReviews(prev => prev.filter(r => r._id !== id));

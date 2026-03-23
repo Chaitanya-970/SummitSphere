@@ -9,7 +9,7 @@ const WeatherWidget = ({ lat, lon }) => {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/weather?lat=${lat}&lon=${lon}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/weather?lat=${lat}&lon=${lon}`);
         const data = await res.json();
         // Backend now returns first-entry-per-day, already sliced to 5.
         // We just consume it directly.

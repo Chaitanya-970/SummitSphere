@@ -12,7 +12,7 @@ export const useSignup = () => {
 
     try {
       // Changed endpoint from /api/auth to /api/user to match your userRoutes.js
-      const response = await fetch('http://localhost:5000/api/user/signup', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/user/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })

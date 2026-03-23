@@ -25,9 +25,9 @@ const Profile = () => {
       try {
         const headers = { 'Authorization': `Bearer ${user.token}` };
         const [authRes, bookRes, radarRes] = await Promise.all([
-          fetch(`http://localhost:5000/api/treks?user_id=${user._id}`, { headers }),
-          fetch(`http://localhost:5000/api/bookings/my-bookings`, { headers }),
-          fetch(`http://localhost:5000/api/bookmarks`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks?user_id=${user._id}`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/my-bookings`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookmarks`, { headers }),
         ]);
         const [authData, bookData, radarData] = await Promise.all([
           authRes.ok ? authRes.json() : [],
@@ -50,9 +50,9 @@ const Profile = () => {
       setIsDataLoading(true); setListData([]);
       try {
         // FIX: use /api/bookmarks (not /api/user/bookmarks which doesn't exist)
-        let endpoint = activeTab === 'authored' ? `http://localhost:5000/api/treks?user_id=${user._id}` :
-                       activeTab === 'booked'   ? `http://localhost:5000/api/bookings/my-bookings` :
-                                                  `http://localhost:5000/api/bookmarks`;
+        let endpoint = activeTab === 'authored' ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks?user_id=${user._id}` :
+                       activeTab === 'booked'   ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookings/my-bookings` :
+                                                  `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/bookmarks`;
         const response = await fetch(endpoint, {
           headers: { 'Authorization': `Bearer ${user.token}` }
         });
@@ -80,7 +80,7 @@ const Profile = () => {
     if (selectedFile) formData.append('image', selectedFile);
     try {
       // FIX: backend uses PUT not PATCH for update-avatar
-      const response = await fetch('http://localhost:5000/api/user/update-avatar', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/user/update-avatar`, {
         method: 'PUT',
         body: formData,
         headers: { 'Authorization': `Bearer ${user.token}` }

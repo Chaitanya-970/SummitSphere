@@ -23,7 +23,7 @@ const EditTrek = () => {
     if (!authReady) return;
     const fetchTrek = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/treks/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${id}`);
         const trek = res.data;
         const ownerId = trek.user_id?._id || trek.user_id;
         if (user && ownerId !== user.id) { navigate(`/trek/${id}`, { replace: true }); return; }
@@ -43,7 +43,7 @@ const EditTrek = () => {
     Object.keys(formData).forEach(key => data.append(key, formData[key]));
     if (image) data.append('image', image);
     try {
-      await axios.patch(`http://localhost:5000/api/treks/${id}`, data, { headers: { Authorization: `Bearer ${user.token}` } });
+      await axios.patch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${id}`, data, { headers: { Authorization: `Bearer ${user.token}` } });
       navigate(`/trek/${id}`);
     } catch (err) { setError(err.response?.data?.error || 'Update failed.'); setUpdating(false); }
   };

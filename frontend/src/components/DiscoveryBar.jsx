@@ -37,7 +37,7 @@ const DiscoveryBar = ({
     if (search.length < 2) { setSuggestions([]); setShowSuggestions(false); return; }
     debounceRef.current = setTimeout(async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/treks?name=${encodeURIComponent(search)}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks?name=${encodeURIComponent(search)}`);
         const names = [...new Set(res.data.map(t => t.name))].slice(0, 6);
         setSuggestions(names);
         setShowSuggestions(names.length > 0);

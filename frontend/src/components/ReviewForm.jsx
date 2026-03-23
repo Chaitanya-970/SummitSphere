@@ -47,7 +47,7 @@ const ReviewForm = ({ trekId, onReviewSuccess }) => {
     if (userName.trim()) formData.append('userName', userName.trim());
     if (selectedFile) formData.append('photos', selectedFile);
     try {
-      await axios.post('http://localhost:5000/api/reviews', formData, { headers: { 'Authorization': `Bearer ${user.token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reviews`, formData, { headers: { 'Authorization': `Bearer ${user.token}` } });
       setComment(""); setRating(0); setSelectedFile(null); setPreviewUrl(null); setUserName("");
       if (onReviewSuccess) onReviewSuccess();
     } catch (err) { setError(err.response?.data?.error || "Submission failed."); }

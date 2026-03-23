@@ -65,7 +65,7 @@ const CreateTrek = () => {
     const [lat, lon] = itinerary[0].coordinates;
     data.append('geometry', JSON.stringify({ type: 'Point', coordinates: [lon, lat] }));
     try {
-      await axios.post('http://localhost:5000/api/treks', data, { headers: { Authorization: `Bearer ${user.token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks`, data, { headers: { Authorization: `Bearer ${user.token}` } });
       navigate('/');
     } catch (err) { setError(err.response?.data?.error || 'Submission failed.'); }
     finally { setLoading(false); }

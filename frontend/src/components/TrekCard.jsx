@@ -43,7 +43,7 @@ const TrekCard = ({ trek }) => {
     e.preventDefault();
     if (!window.confirm(`Delete "${trek.name}" globally?`)) return;
     try {
-      await axios.delete(`http://localhost:5000/api/treks/${trek._id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${trek._id}`, {
         headers: { 'Authorization': `Bearer ${user.token}` }
       });
       window.location.reload();
