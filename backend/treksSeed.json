@@ -1,0 +1,1382 @@
+[
+  {
+    "name": "Kedarkantha",
+    "state": "Uttarakhand",
+    "difficulty": "Easy",
+    "duration": 4,
+    "maxAltitude": 12500,
+    "price": 8500,
+    "description": "A premier winter trek famous for its summit climb and clearing in the pine forests.",
+    "imageUrl": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=1200&q=80",
+    "startPoint": "Sankri",
+    "endPoint": "Kedarkantha Summit",
+    "groupSize": "8-12",
+    "rating": "4.8",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Basecamp Briefing",
+        "description": "Arrival at Sankri and acclimatization."
+      },
+      {
+        "day": 2,
+        "title": "Juda Ka Talab",
+        "description": "Trek through dense pine forests to the frozen lake."
+      },
+      {
+        "day": 3,
+        "title": "Base Camp",
+        "description": "Push to Kedarkantha base camp."
+      },
+      {
+        "day": 4,
+        "title": "Summit",
+        "description": "Pre-dawn summit push and descent."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.1722,
+        31.0225
+      ]
+    }
+  },
+  {
+    "name": "Brahmatal",
+    "state": "Uttarakhand",
+    "difficulty": "Moderate",
+    "duration": 6,
+    "maxAltitude": 12250,
+    "price": 9500,
+    "description": "A classic winter trek offering spectacular views of Mt. Trishul and Mt. Nanda Ghunti.",
+    "imageUrl": "https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=1200&q=80",
+    "startPoint": "Lohajung",
+    "endPoint": "Brahmatal",
+    "groupSize": "8-12",
+    "rating": "4.7",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival",
+        "description": "Reach Lohajung basecamp."
+      },
+      {
+        "day": 2,
+        "title": "Bekaltal",
+        "description": "Trek through rhododendron and oak forests."
+      },
+      {
+        "day": 3,
+        "title": "Brahmatal",
+        "description": "Trek to the high altitude lake."
+      },
+      {
+        "day": 4,
+        "title": "Summit Push",
+        "description": "Climb Brahmatal Pass for panoramic views."
+      },
+      {
+        "day": 5,
+        "title": "Descent",
+        "description": "Trek down to Lohajung."
+      },
+      {
+        "day": 6,
+        "title": "Departure",
+        "description": "Drive back to Kathgodam."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        79.5211,
+        30.0822
+      ]
+    }
+  },
+  {
+    "name": "Roopkund",
+    "state": "Uttarakhand",
+    "difficulty": "Hard",
+    "duration": 8,
+    "maxAltitude": 15750,
+    "price": 14500,
+    "description": "The legendary mystery lake trek passing through the twin meadows of Ali and Bedni Bugyal.",
+    "imageUrl": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+    "startPoint": "Lohajung",
+    "endPoint": "Roopkund Lake",
+    "groupSize": "8-12",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Briefing",
+        "description": "Lohajung arrival and gear check."
+      },
+      {
+        "day": 2,
+        "title": "Didina",
+        "description": "Descent to the Neel Ganga river."
+      },
+      {
+        "day": 3,
+        "title": "Ali Bugyal",
+        "description": "Steep ascent into the alpine meadows."
+      },
+      {
+        "day": 4,
+        "title": "Patar Nachauni",
+        "description": "High altitude meadow walk."
+      },
+      {
+        "day": 5,
+        "title": "Bhagwabasa",
+        "description": "Climb through Kalu Vinayak temple."
+      },
+      {
+        "day": 6,
+        "title": "The Mystery Lake",
+        "description": "Summit to Roopkund and Junargali."
+      },
+      {
+        "day": 7,
+        "title": "Bedni",
+        "description": "Rapid descent to Bedni Bugyal."
+      },
+      {
+        "day": 8,
+        "title": "Return",
+        "description": "Trek back to basecamp."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        79.7322,
+        30.2611
+      ]
+    }
+  },
+  {
+    "name": "Valley of Flowers",
+    "state": "Uttarakhand",
+    "difficulty": "Moderate",
+    "duration": 6,
+    "maxAltitude": 14100,
+    "price": 10500,
+    "description": "A monsoon trek into a UNESCO World Heritage site filled with alpine flora.",
+    "imageUrl": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    "startPoint": "Govindghat",
+    "endPoint": "Hemkund Sahib",
+    "groupSize": "8-12",
+    "rating": "4.6",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Briefing",
+        "description": "Arrival at Govindghat."
+      },
+      {
+        "day": 2,
+        "title": "Ghangaria",
+        "description": "Trek alongside the Pushpawati river."
+      },
+      {
+        "day": 3,
+        "title": "The Valley",
+        "description": "Explore the majestic Valley of Flowers."
+      },
+      {
+        "day": 4,
+        "title": "Hemkund Sahib",
+        "description": "Steep ascent to the glacial lake."
+      },
+      {
+        "day": 5,
+        "title": "Descent",
+        "description": "Return to Govindghat."
+      },
+      {
+        "day": 6,
+        "title": "Departure",
+        "description": "End of expedition."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        79.5911,
+        30.7222
+      ]
+    }
+  },
+  {
+    "name": "Har Ki Dun",
+    "state": "Uttarakhand",
+    "difficulty": "Moderate",
+    "duration": 7,
+    "maxAltitude": 11700,
+    "price": 11500,
+    "description": "A beautiful valley trek steeped in mythology, walking through ancient Himalayan villages.",
+    "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80",
+    "startPoint": "Sankri",
+    "endPoint": "Har Ki Dun Valley",
+    "groupSize": "8-12",
+    "rating": "4.5",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Briefing",
+        "description": "Sankri arrival."
+      },
+      {
+        "day": 2,
+        "title": "Taluka",
+        "description": "Drive to Taluka and trek to Pauni Garaat."
+      },
+      {
+        "day": 3,
+        "title": "Kalkatiyadhaar",
+        "description": "Trek through dense forests."
+      },
+      {
+        "day": 4,
+        "title": "The Valley",
+        "description": "Explore the majestic Har Ki Dun."
+      },
+      {
+        "day": 5,
+        "title": "Osla",
+        "description": "Descend to the ancient village."
+      },
+      {
+        "day": 6,
+        "title": "Taluka",
+        "description": "Return to the roadhead."
+      },
+      {
+        "day": 7,
+        "title": "Departure",
+        "description": "Expedition complete."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.2911,
+        31.1322
+      ]
+    }
+  },
+  {
+    "name": "Hampta Pass",
+    "state": "Himachal Pradesh",
+    "difficulty": "Moderate",
+    "duration": 5,
+    "maxAltitude": 14100,
+    "price": 9500,
+    "description": "A dramatic crossover trek from the lush Kullu valley into the barren deserts of Spiti.",
+    "imageUrl": "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80",
+    "startPoint": "Manali",
+    "endPoint": "Chatru",
+    "groupSize": "8-12",
+    "rating": "4.8",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Jobra",
+        "description": "Drive from Manali and trek to Chika."
+      },
+      {
+        "day": 2,
+        "title": "Balu Ka Gera",
+        "description": "River crossings and meadow walks."
+      },
+      {
+        "day": 3,
+        "title": "The Pass",
+        "description": "Cross Hampta Pass and descend to Shea Goru."
+      },
+      {
+        "day": 4,
+        "title": "Spiti Valley",
+        "description": "Trek to Chatru and drive to Chandratal."
+      },
+      {
+        "day": 5,
+        "title": "Return",
+        "description": "Drive back to Manali via Rohtang."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.3411,
+        32.2522
+      ]
+    }
+  },
+  {
+    "name": "Beas Kund",
+    "state": "Himachal Pradesh",
+    "difficulty": "Easy",
+    "duration": 3,
+    "maxAltitude": 12772,
+    "price": 6500,
+    "description": "A short, beautiful trek to the alpine glacial lake that feeds the Beas River.",
+    "imageUrl": "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1200&q=80",
+    "startPoint": "Solang Valley",
+    "endPoint": "Beas Kund",
+    "groupSize": "8-12",
+    "rating": "4.4",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Bakarthach",
+        "description": "Trek through meadows of Dhundi."
+      },
+      {
+        "day": 2,
+        "title": "The Glacial Lake",
+        "description": "Climb the moraine to Beas Kund."
+      },
+      {
+        "day": 3,
+        "title": "Descent",
+        "description": "Return to Solang."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.1211,
+        32.3622
+      ]
+    }
+  },
+  {
+    "name": "Buran Ghati",
+    "state": "Himachal Pradesh",
+    "difficulty": "Hard",
+    "duration": 8,
+    "maxAltitude": 15000,
+    "price": 15500,
+    "description": "A thrilling expedition featuring a spectacular ice-wall descent and the gorgeous Chandranahan lake.",
+    "imageUrl": "https://images.unsplash.com/photo-1434394354979-a235cd36269d?w=1200&q=80",
+    "startPoint": "Janglik",
+    "endPoint": "Barua",
+    "groupSize": "8-12",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Briefing",
+        "description": "Arrival at Janglik."
+      },
+      {
+        "day": 2,
+        "title": "Dayara",
+        "description": "Trek through pine and oak."
+      },
+      {
+        "day": 3,
+        "title": "Litham",
+        "description": "Enter the sweeping meadows."
+      },
+      {
+        "day": 4,
+        "title": "Chandranahan",
+        "description": "Acclimatization walk to the alpine lake."
+      },
+      {
+        "day": 5,
+        "title": "Dhunda",
+        "description": "Climb to the base of the pass."
+      },
+      {
+        "day": 6,
+        "title": "The Ice Wall",
+        "description": "Cross Buran Ghati and rappel down."
+      },
+      {
+        "day": 7,
+        "title": "River Camp",
+        "description": "Trek to the river junction."
+      },
+      {
+        "day": 8,
+        "title": "Barua",
+        "description": "Final descent to civilization."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.1111,
+        31.3322
+      ]
+    }
+  },
+  {
+    "name": "Bhrigu Lake",
+    "state": "Himachal Pradesh",
+    "difficulty": "Moderate",
+    "duration": 4,
+    "maxAltitude": 14000,
+    "price": 7500,
+    "description": "Famous for its sweeping alpine meadows that change color with the seasons.",
+    "imageUrl": "https://images.unsplash.com/photo-1531804055935-76f44d7caaf6?w=1200&q=80",
+    "startPoint": "Gulaba",
+    "endPoint": "Bhrigu Lake",
+    "groupSize": "8-12",
+    "rating": "4.5",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Jonker Thatch",
+        "description": "Steep ascent into the meadows."
+      },
+      {
+        "day": 2,
+        "title": "Rola Kholi",
+        "description": "Traverse the high altitude grass."
+      },
+      {
+        "day": 3,
+        "title": "The Lake",
+        "description": "Push to the frozen Bhrigu Lake."
+      },
+      {
+        "day": 4,
+        "title": "Descent",
+        "description": "Return to Gulaba."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.2611,
+        32.3122
+      ]
+    }
+  },
+  {
+    "name": "Pin Parvati Pass",
+    "state": "Himachal Pradesh",
+    "difficulty": "Hard",
+    "duration": 11,
+    "maxAltitude": 17450,
+    "price": 25000,
+    "description": "A legendary, grueling traverse from the Parvati valley into the high cold deserts of Spiti.",
+    "imageUrl": "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1200&q=80",
+    "startPoint": "Barsheni",
+    "endPoint": "Mud Village",
+    "groupSize": "8-12",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kheerganga",
+        "description": "Trek through the dense Parvati valley."
+      },
+      {
+        "day": 2,
+        "title": "Tunda Bhuj",
+        "description": "Cross the river into higher terrain."
+      },
+      {
+        "day": 3,
+        "title": "Thakur Kuan",
+        "description": "Negotiate rockfalls and bridges."
+      },
+      {
+        "day": 4,
+        "title": "Odi Thatch",
+        "description": "Meadow walking."
+      },
+      {
+        "day": 5,
+        "title": "Mantalai",
+        "description": "Reach the sacred glacial lake."
+      },
+      {
+        "day": 6,
+        "title": "Base Camp",
+        "description": "Steep climb towards the pass."
+      },
+      {
+        "day": 7,
+        "title": "The Traverse",
+        "description": "Cross the massive Pin Parvati glacier."
+      },
+      {
+        "day": 8,
+        "title": "Spiti Side",
+        "description": "Descend into the stark landscape."
+      },
+      {
+        "day": 9,
+        "title": "Wichkurung",
+        "description": "Trek along the Pin river."
+      },
+      {
+        "day": 10,
+        "title": "Mud",
+        "description": "Arrive at the first Spiti village."
+      },
+      {
+        "day": 11,
+        "title": "Kaza",
+        "description": "Drive out to civilization."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.8511,
+        31.8522
+      ]
+    }
+  },
+  {
+    "name": "Goechala",
+    "state": "Sikkim",
+    "difficulty": "Hard",
+    "duration": 10,
+    "maxAltitude": 15100,
+    "price": 18500,
+    "description": "Get closer to Mt. Kanchenjunga than on any other trek. A stunning journey through rhododendron forests.",
+    "imageUrl": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1200&q=80",
+    "startPoint": "Yuksom",
+    "endPoint": "Goechala Viewpoint",
+    "groupSize": "8-12",
+    "rating": "4.8",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Yuksom",
+        "description": "Basecamp briefing."
+      },
+      {
+        "day": 2,
+        "title": "Sachen",
+        "description": "Trek through thick rainforests."
+      },
+      {
+        "day": 3,
+        "title": "Tshoka",
+        "description": "Steep climb to the Tibetan settlement."
+      },
+      {
+        "day": 4,
+        "title": "Dzongri",
+        "description": "Trek through wooden paths to alpine meadows."
+      },
+      {
+        "day": 5,
+        "title": "Dzongri Top",
+        "description": "Acclimatization climb for sunrise views."
+      },
+      {
+        "day": 6,
+        "title": "Thangsing",
+        "description": "Descend into the Prek Chu valley."
+      },
+      {
+        "day": 7,
+        "title": "Lamuney",
+        "description": "Short trek to the final camp."
+      },
+      {
+        "day": 8,
+        "title": "The Pass",
+        "description": "Midnight push to Goechala Viewpoint 1."
+      },
+      {
+        "day": 9,
+        "title": "Return",
+        "description": "Rapid descent to Tshoka."
+      },
+      {
+        "day": 10,
+        "title": "Yuksom",
+        "description": "End of expedition."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        88.1911,
+        27.5322
+      ]
+    }
+  },
+  {
+    "name": "Sandakphu Phalut",
+    "state": "Sikkim",
+    "difficulty": "Moderate",
+    "duration": 7,
+    "maxAltitude": 11930,
+    "price": 12500,
+    "description": "Walk the Singalila ridge for unprecedented views of Everest, Lhotse, Makalu, and Kanchenjunga.",
+    "imageUrl": "https://images.unsplash.com/photo-1465311440653-ba3b0d2d31fac?w=1200&q=80",
+    "startPoint": "Manebhanjan",
+    "endPoint": "Phalut",
+    "groupSize": "8-12",
+    "rating": "4.6",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Tonglu",
+        "description": "Steep climb to the border of Nepal."
+      },
+      {
+        "day": 2,
+        "title": "Kalipokhri",
+        "description": "Trek through the bamboo forests."
+      },
+      {
+        "day": 3,
+        "title": "Sandakphu",
+        "description": "Summit the highest peak in West Bengal."
+      },
+      {
+        "day": 4,
+        "title": "Phalut",
+        "description": "The 21km ridge walk."
+      },
+      {
+        "day": 5,
+        "title": "Gorkhey",
+        "description": "Descend into the pristine valley."
+      },
+      {
+        "day": 6,
+        "title": "Srikhola",
+        "description": "Trek out through pine forests."
+      },
+      {
+        "day": 7,
+        "title": "Darjeeling",
+        "description": "Drive out."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        88.0111,
+        27.1022
+      ]
+    }
+  },
+  {
+    "name": "Kanchenjunga Base Camp",
+    "state": "Sikkim",
+    "difficulty": "Hard",
+    "duration": 11,
+    "maxAltitude": 16500,
+    "price": 28000,
+    "description": "An intense, remote expedition to the base of the world's third highest mountain.",
+    "imageUrl": "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1200&q=80",
+    "startPoint": "Yuksom",
+    "endPoint": "Kanchenjunga BC",
+    "groupSize": "6-10",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Briefing",
+        "description": "Logistics preparation."
+      },
+      {
+        "day": 2,
+        "title": "Bakhim",
+        "description": "Jungle trek."
+      },
+      {
+        "day": 3,
+        "title": "Dzongri",
+        "description": "Gain serious altitude."
+      },
+      {
+        "day": 4,
+        "title": "Bikhbari",
+        "description": "Enter the remote zones."
+      },
+      {
+        "day": 5,
+        "title": "Chaurikhang",
+        "description": "Basecamp approach."
+      },
+      {
+        "day": 6,
+        "title": "Rathong Glacier",
+        "description": "Ice training and acclimatization."
+      },
+      {
+        "day": 7,
+        "title": "KBC",
+        "description": "Push to the final base camp."
+      },
+      {
+        "day": 8,
+        "title": "Explore",
+        "description": "Reconnaissance."
+      },
+      {
+        "day": 9,
+        "title": "Descent",
+        "description": "Retrace steps."
+      },
+      {
+        "day": 10,
+        "title": "Tshoka",
+        "description": "Lower altitudes."
+      },
+      {
+        "day": 11,
+        "title": "Complete",
+        "description": "Return to Yuksom."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        88.1411,
+        27.6922
+      ]
+    }
+  },
+  {
+    "name": "Dzongri Trail",
+    "state": "Sikkim",
+    "difficulty": "Moderate",
+    "duration": 5,
+    "maxAltitude": 13000,
+    "price": 10500,
+    "description": "A shorter version of the Goechala trek, culminating in the spectacular views from Dzongri Top.",
+    "imageUrl": "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?w=1200&q=80",
+    "startPoint": "Yuksom",
+    "endPoint": "Dzongri Top",
+    "groupSize": "8-12",
+    "rating": "4.5",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Yuksom",
+        "description": "Briefing."
+      },
+      {
+        "day": 2,
+        "title": "Sachen",
+        "description": "Forest walk."
+      },
+      {
+        "day": 3,
+        "title": "Tshoka",
+        "description": "Steep climb."
+      },
+      {
+        "day": 4,
+        "title": "Dzongri Top",
+        "description": "Sunrise views and return."
+      },
+      {
+        "day": 5,
+        "title": "Descent",
+        "description": "Trek back to basecamp."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        88.1611,
+        27.4222
+      ]
+    }
+  },
+  {
+    "name": "Singalila Ridge",
+    "state": "Sikkim",
+    "difficulty": "Easy",
+    "duration": 4,
+    "maxAltitude": 10400,
+    "price": 8500,
+    "description": "A leisurely walk across the border of India and Nepal, famous for Red Pandas and Everest views.",
+    "imageUrl": "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&q=80",
+    "startPoint": "Dhotrey",
+    "endPoint": "Tonglu",
+    "groupSize": "8-12",
+    "rating": "4.3",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Start",
+        "description": "Dhotrey to Tonglu."
+      },
+      {
+        "day": 2,
+        "title": "Ridge",
+        "description": "Walk to Tumling."
+      },
+      {
+        "day": 3,
+        "title": "Views",
+        "description": "Sunrise at Meghma."
+      },
+      {
+        "day": 4,
+        "title": "End",
+        "description": "Descent to Manebhanjan."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        88.0811,
+        27.0322
+      ]
+    }
+  },
+  {
+    "name": "Kashmir Great Lakes",
+    "state": "Jammu & Kashmir",
+    "difficulty": "Moderate",
+    "duration": 8,
+    "maxAltitude": 13750,
+    "price": 16500,
+    "description": "India's most beautiful alpine trek. Walk past seven pristine glacial lakes.",
+    "imageUrl": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80",
+    "startPoint": "Sonamarg",
+    "endPoint": "Naranag",
+    "groupSize": "8-12",
+    "rating": "5.0",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Sonamarg",
+        "description": "Arrival and briefing."
+      },
+      {
+        "day": 2,
+        "title": "Nichnai",
+        "description": "Steep climb out of the valley."
+      },
+      {
+        "day": 3,
+        "title": "Vishansar",
+        "description": "Cross Nichnai Pass to the first lake."
+      },
+      {
+        "day": 4,
+        "title": "Krishansar",
+        "description": "Rest day and exploration."
+      },
+      {
+        "day": 5,
+        "title": "Gadsar",
+        "description": "Cross Gadsar Pass, highest point."
+      },
+      {
+        "day": 6,
+        "title": "Satsar",
+        "description": "Trek past seven connected lakes."
+      },
+      {
+        "day": 7,
+        "title": "Gangabal",
+        "description": "Cross Zaj Pass to the twin lakes."
+      },
+      {
+        "day": 8,
+        "title": "Naranag",
+        "description": "Long descent to civilization."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        75.0511,
+        34.3422
+      ]
+    }
+  },
+  {
+    "name": "Tarsar Marsar",
+    "state": "Jammu & Kashmir",
+    "difficulty": "Moderate",
+    "duration": 7,
+    "maxAltitude": 13200,
+    "price": 14500,
+    "description": "Camp right next to stunning almond-shaped alpine lakes in the heart of Kashmir.",
+    "imageUrl": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&q=80",
+    "startPoint": "Aru Valley",
+    "endPoint": "Sumbal",
+    "groupSize": "8-12",
+    "rating": "4.8",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Aru",
+        "description": "Drive from Srinagar to basecamp."
+      },
+      {
+        "day": 2,
+        "title": "Lidderwat",
+        "description": "Trek along the Lidder river."
+      },
+      {
+        "day": 3,
+        "title": "Shekwas",
+        "description": "Climb into the meadows."
+      },
+      {
+        "day": 4,
+        "title": "Tarsar",
+        "description": "Arrive at the first pristine lake."
+      },
+      {
+        "day": 5,
+        "title": "Sunderdas",
+        "description": "Cross the pass for views of Marsar."
+      },
+      {
+        "day": 6,
+        "title": "Homwas",
+        "description": "Descend towards the treeline."
+      },
+      {
+        "day": 7,
+        "title": "Departure",
+        "description": "Trek to Sumbal."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        75.1211,
+        34.1522
+      ]
+    }
+  },
+  {
+    "name": "Warwan Valley",
+    "state": "Jammu & Kashmir",
+    "difficulty": "Hard",
+    "duration": 9,
+    "maxAltitude": 14500,
+    "price": 19000,
+    "description": "An incredibly remote and challenging crossover trek traversing massive glaciers.",
+    "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80",
+    "startPoint": "Panikhar",
+    "endPoint": "Inshan",
+    "groupSize": "6-10",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kargil",
+        "description": "Drive to Panikhar."
+      },
+      {
+        "day": 2,
+        "title": "Denora",
+        "description": "Trek into the Suru valley."
+      },
+      {
+        "day": 3,
+        "title": "Kalapari",
+        "description": "Approach the glacial moraine."
+      },
+      {
+        "day": 4,
+        "title": "Kaintal",
+        "description": "Cross the massive Lomvilad glacier."
+      },
+      {
+        "day": 5,
+        "title": "Humpet",
+        "description": "Descend into the Warwan valley."
+      },
+      {
+        "day": 6,
+        "title": "Sukhnai",
+        "description": "Trek to the isolated wooden village."
+      },
+      {
+        "day": 7,
+        "title": "Purmandal",
+        "description": "Valley walk."
+      },
+      {
+        "day": 8,
+        "title": "Inshan",
+        "description": "Final trek day."
+      },
+      {
+        "day": 9,
+        "title": "Return",
+        "description": "Drive out to Srinagar."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        75.6511,
+        33.9522
+      ]
+    }
+  },
+  {
+    "name": "Naubani Valley",
+    "state": "Jammu & Kashmir",
+    "difficulty": "Easy",
+    "duration": 4,
+    "maxAltitude": 11500,
+    "price": 8000,
+    "description": "An off-beat, gentle exploration of Kashmir's hidden meadows and shepherd trails.",
+    "imageUrl": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80",
+    "startPoint": "Srinagar",
+    "endPoint": "Naubani",
+    "groupSize": "8-12",
+    "rating": "4.4",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Start",
+        "description": "Drive and short trek."
+      },
+      {
+        "day": 2,
+        "title": "Meadows",
+        "description": "Explore the Naubani grass."
+      },
+      {
+        "day": 3,
+        "title": "Shepherds",
+        "description": "Cultural interactions."
+      },
+      {
+        "day": 4,
+        "title": "End",
+        "description": "Return to Srinagar."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        74.9511,
+        33.8522
+      ]
+    }
+  },
+  {
+    "name": "Tulian Lake",
+    "state": "Jammu & Kashmir",
+    "difficulty": "Moderate",
+    "duration": 3,
+    "maxAltitude": 12000,
+    "price": 7500,
+    "description": "A rapid ascent from Pahalgam to a spectacular, ice-clogged mountain lake.",
+    "imageUrl": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80",
+    "startPoint": "Pahalgam",
+    "endPoint": "Tulian Lake",
+    "groupSize": "8-12",
+    "rating": "4.5",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Baisaran",
+        "description": "Trek through pine forests."
+      },
+      {
+        "day": 2,
+        "title": "The Lake",
+        "description": "Steep climb to Tulian."
+      },
+      {
+        "day": 3,
+        "title": "Descent",
+        "description": "Return to Pahalgam."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        75.3311,
+        34.0122
+      ]
+    }
+  },
+  {
+    "name": "Pin Bhaba Pass",
+    "state": "Lahaul and Spiti",
+    "difficulty": "Hard",
+    "duration": 8,
+    "maxAltitude": 16100,
+    "price": 17500,
+    "description": "Cross from the lush green forests of Kinnaur into the stark pink mountains of Spiti.",
+    "imageUrl": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&q=80",
+    "startPoint": "Kafnu",
+    "endPoint": "Mud Village",
+    "groupSize": "8-12",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kafnu",
+        "description": "Basecamp arrival."
+      },
+      {
+        "day": 2,
+        "title": "Mulling",
+        "description": "Trek through dense pine forests."
+      },
+      {
+        "day": 3,
+        "title": "Kara",
+        "description": "Enter the high altitude meadows."
+      },
+      {
+        "day": 4,
+        "title": "Pushtirang",
+        "description": "Climb towards the pass base."
+      },
+      {
+        "day": 5,
+        "title": "The Pass",
+        "description": "Cross into Spiti."
+      },
+      {
+        "day": 6,
+        "title": "Baldar",
+        "description": "Descend into the stark desert."
+      },
+      {
+        "day": 7,
+        "title": "Mud",
+        "description": "Trek to the first village."
+      },
+      {
+        "day": 8,
+        "title": "Kaza",
+        "description": "Drive out."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.0111,
+        31.8522
+      ]
+    }
+  },
+  {
+    "name": "Mount Kanamo",
+    "state": "Lahaul and Spiti",
+    "difficulty": "Hard",
+    "duration": 6,
+    "maxAltitude": 19600,
+    "price": 16000,
+    "description": "A non-technical trekking peak that takes you to nearly 20,000 feet.",
+    "imageUrl": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200&q=80",
+    "startPoint": "Kibber",
+    "endPoint": "Kanamo Summit",
+    "groupSize": "6-10",
+    "rating": "4.7",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kibber",
+        "description": "Acclimatize in the high village."
+      },
+      {
+        "day": 2,
+        "title": "Base Camp",
+        "description": "Trek to the scree slopes."
+      },
+      {
+        "day": 3,
+        "title": "Load Ferry",
+        "description": "Move gear higher."
+      },
+      {
+        "day": 4,
+        "title": "Advanced Camp",
+        "description": "Position for summit."
+      },
+      {
+        "day": 5,
+        "title": "Summit",
+        "description": "Push to 19,600ft."
+      },
+      {
+        "day": 6,
+        "title": "Descent",
+        "description": "Return to Kibber."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.0111,
+        32.3322
+      ]
+    }
+  },
+  {
+    "name": "Chandratal Lake",
+    "state": "Lahaul and Spiti",
+    "difficulty": "Easy",
+    "duration": 3,
+    "maxAltitude": 14100,
+    "price": 7000,
+    "description": "A short, beautiful high-altitude walk to the famous Moon Lake.",
+    "imageUrl": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1200&q=80",
+    "startPoint": "Batal",
+    "endPoint": "Chandratal",
+    "groupSize": "8-12",
+    "rating": "4.6",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Batal",
+        "description": "Arrive and acclimatize."
+      },
+      {
+        "day": 2,
+        "title": "The Moon Lake",
+        "description": "Trek alongside the Chandra river."
+      },
+      {
+        "day": 3,
+        "title": "Kunzum",
+        "description": "Drive over the pass."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.6111,
+        32.4822
+      ]
+    }
+  },
+  {
+    "name": "Spiti Valley Explore",
+    "state": "Lahaul and Spiti",
+    "difficulty": "Moderate",
+    "duration": 5,
+    "maxAltitude": 13500,
+    "price": 12000,
+    "description": "A mix of trekking and road tripping through the ancient monasteries and high villages.",
+    "imageUrl": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80",
+    "startPoint": "Kaza",
+    "endPoint": "Dhankar",
+    "groupSize": "8-12",
+    "rating": "4.5",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kaza",
+        "description": "Arrival."
+      },
+      {
+        "day": 2,
+        "title": "Key Monastery",
+        "description": "Trek to the ancient gompa."
+      },
+      {
+        "day": 3,
+        "title": "Langza",
+        "description": "Village homestay."
+      },
+      {
+        "day": 4,
+        "title": "Dhankar",
+        "description": "Trek to the cliffside monastery."
+      },
+      {
+        "day": 5,
+        "title": "End",
+        "description": "Drive out."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.0711,
+        32.2222
+      ]
+    }
+  },
+  {
+    "name": "Parang La",
+    "state": "Lahaul and Spiti",
+    "difficulty": "Hard",
+    "duration": 9,
+    "maxAltitude": 18300,
+    "price": 22000,
+    "description": "An ancient trade route connecting Spiti to Ladakh, crossing a massive glacier to Tsomoriri lake.",
+    "imageUrl": "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=1200&q=80",
+    "startPoint": "Kibber",
+    "endPoint": "Karzok",
+    "groupSize": "6-10",
+    "rating": "4.9",
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Dumla",
+        "description": "Short trek from Kibber."
+      },
+      {
+        "day": 2,
+        "title": "Thaltak",
+        "description": "Steep descent into a gorge."
+      },
+      {
+        "day": 3,
+        "title": "Bongrojen",
+        "description": "Climb towards the pass."
+      },
+      {
+        "day": 4,
+        "title": "The Pass",
+        "description": "Cross Parang La and walk on the glacier."
+      },
+      {
+        "day": 5,
+        "title": "Datang Yongma",
+        "description": "Enter the vast plains of Ladakh."
+      },
+      {
+        "day": 6,
+        "title": "Norbu Sumdo",
+        "description": "River crossings."
+      },
+      {
+        "day": 7,
+        "title": "Kiangdom",
+        "description": "Reach the southern edge of Tsomoriri."
+      },
+      {
+        "day": 8,
+        "title": "Karzok",
+        "description": "Walk along the lake to the village."
+      },
+      {
+        "day": 9,
+        "title": "Leh",
+        "description": "Drive out."
+      }
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.0411,
+        32.6122
+      ]
+    }
+  }
+]
