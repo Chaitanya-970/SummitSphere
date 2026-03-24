@@ -412,25 +412,6 @@ const TrekDetails = () => {
         </div>
       </main>
 
-      {/* MOBILE STICKY BOOK BUTTON — hidden on desktop, shown on mobile */}
-      <div className="trek-mobile-book" style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 500,
-        padding: '12px 16px 16px',
-        background: 'linear-gradient(to top, var(--bg-primary) 70%, transparent)',
-        display: 'none', // overridden by CSS class on mobile
-      }}>
-        <Link to={`/book/${trek._id}`} style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-          padding: '15px', background: 'var(--accent-green)', color: 'white',
-          borderRadius: '14px', fontFamily: 'Syne, sans-serif', fontWeight: 700,
-          fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase',
-          textDecoration: 'none', boxShadow: '0 8px 28px rgba(45,106,79,0.4)',
-          transition: 'all 0.2s',
-        }}>
-          Book This Trek →
-        </Link>
-      </div>
-
       <style>{`
         @media (min-width: 1024px) {
           .trek-detail-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important; align-items: start; }
@@ -440,9 +421,6 @@ const TrekDetails = () => {
           transform: translateY(0);
           transition: transform 0.1s linear;
         }
-        .trek-mobile-book { display: none; }
-        @media (max-width: 1023px) {
-          .trek-mobile-book { display: flex !important; }
         }
       `}</style>
 
