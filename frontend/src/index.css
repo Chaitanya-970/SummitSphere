@@ -6,6 +6,13 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Prevent horizontal scroll / white space on mobile */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 :root {
   --bg-primary: #faf9f6;
   --bg-secondary: #f2ede4;

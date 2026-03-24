@@ -87,7 +87,7 @@ const DiscoveryBar = ({
   };
 
   const selectStyle = {
-    flex: '1', minWidth: '110px', appearance: 'none', WebkitAppearance: 'none',
+    flex: '1', minWidth: '0', appearance: 'none', WebkitAppearance: 'none',
     background: 'var(--bg-input)', border: '1px solid var(--border-light)',
     borderRadius: '10px', padding: '11px 14px', fontFamily: 'Syne, sans-serif',
     fontWeight: 600, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase',

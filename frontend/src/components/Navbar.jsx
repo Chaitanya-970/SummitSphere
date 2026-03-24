@@ -27,6 +27,8 @@ const Navbar = () => {
         WebkitBackdropFilter: 'blur(16px)',
         position: 'sticky', top: 0, zIndex: 1000,
         transition: 'background 0.3s ease',
+        width: '100%',
+        overflow: 'hidden',
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px', height: '66px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
 
@@ -102,15 +104,8 @@ const Navbar = () => {
             </button>
           </nav>
 
-          {/* MOBILE: dark toggle + hamburger — only visible below md breakpoint */}
+          {/* MOBILE: hamburger only — dark toggle hidden on mobile since desktop nav handles it */}
           <div className="flex md:hidden" style={{ alignItems: 'center', gap: '8px' }}>
-            <button
-              onClick={toggle}
-              style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}
-              title={isDark ? 'Light Mode' : 'Dark Mode'}
-            >
-              {isDark ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}

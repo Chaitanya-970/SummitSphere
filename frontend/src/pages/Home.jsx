@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { Mountain, Wind, FilterX, Compass } from 'lucide-react';
 import TrekCard, { TrekCardSkeleton } from '../components/TrekCard';
@@ -43,6 +43,7 @@ const Home = () => {
   const [stateFilter, setStateFilter] = useState('');
   const [durationFilter, setDurationFilter] = useState('');
   const [sort, setSort] = useState('newest');
+  const resultsRef = useRef(null);
 
   const debouncedSearch = useDebounce(search, 400);
 
@@ -66,6 +67,13 @@ const Home = () => {
   }, [debouncedSearch, difficulty, stateFilter, durationFilter, coords, sort]);
 
   useEffect(() => { fetchTreks(); }, [fetchTreks]);
+
+  // Auto-scroll to results when user types a search or applies a filter
+  useEffect(() => {
+    if ((debouncedSearch || difficulty || stateFilter || durationFilter) && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [debouncedSearch, difficulty, stateFilter, durationFilter]);
   useEffect(() => { document.title = "SummitSphere — Discover India's Finest Treks"; }, []);
 
   const handleNearMe = () => {
@@ -98,7 +106,7 @@ const Home = () => {
             <span style={{ color: 'white', fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>India's Trail Network</span>
           </div>
 
-          <h1 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: 'clamp(48px, 9vw, 100px)', color: 'white', lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '20px', textShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
+          <h1 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: 'clamp(36px, 9vw, 100px)', color: 'white', lineHeight: 0.95, letterSpacing: '-0.04em', marginBottom: '20px', textShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>
             Find Your<br/><span style={{ color: 'var(--accent-green-light)' }}>Perfect Trail.</span>
           </h1>
 
@@ -119,7 +127,7 @@ const Home = () => {
       </header>
 
       {/* RESULTS */}
-      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px 0' }}>
+      <main ref={resultsRef} style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px 0' }}>
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
