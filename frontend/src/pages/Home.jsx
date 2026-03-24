@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Mountain, Wind, FilterX, Compass } from 'lucide-react';
 import TrekCard, { TrekCardSkeleton } from '../components/TrekCard';
@@ -43,7 +43,6 @@ const Home = () => {
   const [stateFilter, setStateFilter] = useState('');
   const [durationFilter, setDurationFilter] = useState('');
   const [sort, setSort] = useState('newest');
-  const resultsRef = useRef(null);
 
   const debouncedSearch = useDebounce(search, 400);
 
@@ -67,13 +66,6 @@ const Home = () => {
   }, [debouncedSearch, difficulty, stateFilter, durationFilter, coords, sort]);
 
   useEffect(() => { fetchTreks(); }, [fetchTreks]);
-
-  // Auto-scroll to results when user types a search or applies a filter
-  useEffect(() => {
-    if ((debouncedSearch || difficulty || stateFilter || durationFilter) && resultsRef.current) {
-      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [debouncedSearch, difficulty, stateFilter, durationFilter]);
   useEffect(() => { document.title = "SummitSphere — Discover India's Finest Treks"; }, []);
 
   const handleNearMe = () => {
@@ -99,7 +91,7 @@ const Home = () => {
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, var(--bg-primary) 100%)' }} />
 
         {/* Hero content */}
-        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 24px', width: '100%' }}>
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 16px', width: '100%', boxSizing: 'border-box' }}>
           {/* Pill badge */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 18px', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.2)', marginBottom: '24px' }}>
             <Mountain size={13} color="white" strokeWidth={2.5} />
@@ -127,7 +119,7 @@ const Home = () => {
       </header>
 
       {/* RESULTS */}
-      <main ref={resultsRef} style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px 0' }}>
+      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 24px 0' }}>
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', flexWrap: 'wrap', gap: '12px' }}>
           <div>

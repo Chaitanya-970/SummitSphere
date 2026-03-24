@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useDarkMode } from '../context/DarkModeContext';
-import { Mountain, Plus, LogOut, Bookmark, LayoutDashboard, Menu, X, Sun, Moon } from 'lucide-react';
+import { Mountain, Plus, LogOut, Bookmark, LayoutDashboard, Menu, X, Sun, Moon, User } from 'lucide-react';
 
 const DEFAULT_AVATAR = "https://api.dicebear.com/7.x/adventurer/svg?seed=summitsphere&backgroundColor=2d6a4f";
 
@@ -11,12 +11,13 @@ const Navbar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const { isDark, toggle } = useDarkMode();
-  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isAdmin = user?.role === 'admin';
   const displayName = user?.name || user?.email?.split('@')[0] || 'Explorer';
   const profileImg = user?.profilePicture || DEFAULT_AVATAR;
+
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <>
@@ -28,16 +29,19 @@ const Navbar = () => {
         position: 'sticky', top: 0, zIndex: 1000,
         transition: 'background 0.3s ease',
         width: '100%',
-        overflow: 'hidden',
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px', height: '66px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-
+        <div style={{
+          maxWidth: '1400px', margin: '0 auto',
+          padding: '0 16px',
+          height: '60px', display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', gap: '8px',
+        }}>
           {/* LOGO */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, textDecoration: 'none' }}>
-            <div style={{ background: 'var(--accent-green)', padding: '7px', borderRadius: '10px', display: 'flex', boxShadow: 'var(--shadow-accent)' }}>
-              <Mountain color="white" size={17} strokeWidth={2.5} />
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, textDecoration: 'none' }}>
+            <div style={{ background: 'var(--accent-green)', padding: '6px', borderRadius: '9px', display: 'flex', boxShadow: 'var(--shadow-accent)' }}>
+              <Mountain color="white" size={16} strokeWidth={2.5} />
             </div>
-            <span style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '21px', letterSpacing: '-0.04em', color: 'var(--text-primary)', lineHeight: 1 }}>
+            <span style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '19px', letterSpacing: '-0.04em', color: 'var(--text-primary)', lineHeight: 1 }}>
               Summit<span style={{ color: 'var(--accent-green)' }}>Sphere</span>
             </span>
           </Link>
@@ -47,12 +51,12 @@ const Navbar = () => {
             {user ? (
               <>
                 {isAdmin && (
-                  <Link to="/admin" title="Admin Dashboard" style={iconBtnStyle()}
+                  <Link to="/admin" title="Admin" style={iconBtnStyle()}
                     onMouseEnter={e => applyHover(e, true)} onMouseLeave={e => applyHover(e, false)}>
                     <LayoutDashboard size={18} />
                   </Link>
                 )}
-                <Link to="/bookmarks" title="Saved Treks" style={iconBtnStyle()}
+                <Link to="/bookmarks" title="Saved" style={iconBtnStyle()}
                   onMouseEnter={e => applyHover(e, true)} onMouseLeave={e => applyHover(e, false)}>
                   <Bookmark size={18} />
                 </Link>
@@ -66,8 +70,6 @@ const Navbar = () => {
                   onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-muted)'; }}>
                   <LogOut size={18} />
                 </button>
-
-                {/* USER PILL */}
                 <Link to="/profile" style={{ display: 'flex', alignItems: 'center', gap: '9px', padding: '5px 12px 5px 5px', borderRadius: '50px', border: '1px solid var(--border-primary)', marginLeft: '4px', transition: 'all 0.2s', textDecoration: 'none' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-green)'; e.currentTarget.style.background = 'var(--accent-green-bg)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-primary)'; e.currentTarget.style.background = 'transparent'; }}>
@@ -93,8 +95,6 @@ const Navbar = () => {
                 </Link>
               </>
             )}
-
-            {/* DARK MODE TOGGLE — inline responsive hide on mobile */}
             <button onClick={toggle} title={isDark ? 'Light Mode' : 'Dark Mode'}
               style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 14px', borderRadius: '10px', border: '1px solid var(--border-primary)', background: 'var(--bg-secondary)', cursor: 'pointer', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '11px', letterSpacing: '0.06em', color: 'var(--text-muted)', transition: 'all 0.2s', marginLeft: '4px', whiteSpace: 'nowrap' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-green)'; e.currentTarget.style.color = 'var(--accent-green)'; e.currentTarget.style.background = 'var(--accent-green-bg)'; }}
@@ -104,50 +104,82 @@ const Navbar = () => {
             </button>
           </nav>
 
-          {/* MOBILE: hamburger only — dark toggle hidden on mobile since desktop nav handles it */}
-          <div className="flex md:hidden" style={{ alignItems: 'center', gap: '8px' }}>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}
-            >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+          {/* MOBILE: logo + hamburger only */}
+          <button className="flex md:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-primary)', alignItems: 'center', flexShrink: 0 }}>
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE FULL-SCREEN MENU */}
       {mobileOpen && (
-        <div style={{ position: 'fixed', top: '66px', left: 0, right: 0, bottom: 0, background: 'var(--bg-nav)', backdropFilter: 'blur(20px)', zIndex: 999, padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid var(--border-light)', overflowY: 'auto' }}>
-          {user ? (
-            <>
-              <Link to="/profile" onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 16px', borderRadius: '14px', background: 'var(--bg-secondary)', marginBottom: '4px', textDecoration: 'none' }}>
-                <img src={profileImg} alt="profile" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-green)' }}
+        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: 'var(--bg-primary)', zIndex: 999, overflowY: 'auto', borderTop: '1px solid var(--border-light)' }}>
+          <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+
+            {/* USER SECTION */}
+            {user ? (
+              <Link to="/profile" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px', borderRadius: '16px', background: 'var(--accent-green-bg)', border: '1px solid var(--accent-green)', textDecoration: 'none', marginBottom: '4px' }}>
+                <img src={profileImg} alt="profile" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-green)', flexShrink: 0 }}
                   onError={e => { e.currentTarget.src = DEFAULT_AVATAR; }} />
                 <div>
-                  <div style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent-green)' }}>{isAdmin ? 'Commander' : 'Explorer'}</div>
-                  <div style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '17px', color: 'var(--text-primary)' }}>{displayName}</div>
+                  <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent-green)', marginBottom: '2px' }}>{isAdmin ? 'Commander' : 'Explorer'}</div>
+                  <div style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '18px', color: 'var(--text-primary)' }}>{displayName}</div>
                 </div>
               </Link>
-              {[
-                { to: '/bookmarks', label: 'Saved Treks', icon: <Bookmark size={17}/> },
-                { to: '/create', label: 'Add New Trek', icon: <Plus size={17}/> },
-                ...(isAdmin ? [{ to: '/admin', label: 'Admin Dashboard', icon: <LayoutDashboard size={17}/> }] : []),
-              ].map(item => (
-                <Link key={item.to} to={item.to} onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px 16px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-light)', textDecoration: 'none' }}>
-                  <span style={{ color: 'var(--accent-green)' }}>{item.icon}</span>{item.label}
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '4px' }}>
+                <Link to="/login" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-primary)', textDecoration: 'none' }}>
+                  Sign In
                 </Link>
-              ))}
-              <button onClick={() => { logout(); setMobileOpen(false); }} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '13px 16px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--accent-rose)', background: 'var(--accent-rose-bg)', border: 'none', cursor: 'pointer', marginTop: '4px', width: '100%', textAlign: 'left' }}>
-                <LogOut size={17} /> Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" onClick={() => setMobileOpen(false)} style={{ display: 'block', padding: '15px', textAlign: 'center', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-primary)', textDecoration: 'none' }}>Sign In</Link>
-              <Link to="/signup" onClick={() => setMobileOpen(false)} style={{ display: 'block', padding: '15px', textAlign: 'center', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'white', background: 'var(--accent-green)', textDecoration: 'none', boxShadow: 'var(--shadow-accent)' }}>Join Free</Link>
-            </>
-          )}
+                <Link to="/signup" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'white', background: 'var(--accent-green)', textDecoration: 'none', boxShadow: 'var(--shadow-accent)' }}>
+                  Join Free
+                </Link>
+              </div>
+            )}
+
+            {/* DIVIDER */}
+            <div style={{ height: '1px', background: 'var(--border-light)', margin: '4px 0' }} />
+
+            {/* NAV LINKS */}
+            {user && (
+              <>
+                {[
+                  { to: '/bookmarks', label: 'Saved Treks',     icon: <Bookmark size={18}/> },
+                  { to: '/create',    label: 'Add New Trek',    icon: <Plus size={18}/> },
+                  { to: '/profile',   label: 'My Profile',      icon: <User size={18}/> },
+                  ...(isAdmin ? [{ to: '/admin', label: 'Admin Dashboard', icon: <LayoutDashboard size={18}/> }] : []),
+                ].map(item => (
+                  <Link key={item.to} to={item.to} onClick={closeMobile}
+                    style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-light)', textDecoration: 'none' }}>
+                    <span style={{ color: 'var(--accent-green)', display: 'flex' }}>{item.icon}</span>
+                    {item.label}
+                  </Link>
+                ))}
+              </>
+            )}
+
+            {/* DARK MODE */}
+            <button onClick={toggle}
+              style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-light)', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
+              <span style={{ color: isDark ? 'var(--accent-amber)' : '#7c3aed', display: 'flex' }}>
+                {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              </span>
+              {isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            </button>
+
+            {/* SIGN OUT */}
+            {user && (
+              <>
+                <div style={{ height: '1px', background: 'var(--border-light)', margin: '4px 0' }} />
+                <button onClick={() => { logout(); closeMobile(); }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--accent-rose)', background: 'var(--accent-rose-bg)', border: '1px solid var(--accent-rose)22', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
+                  <LogOut size={18} /> Sign Out
+                </button>
+              </>
+            )}
+          </div>
         </div>
       )}
     </>
