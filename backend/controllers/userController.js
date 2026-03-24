@@ -77,13 +77,12 @@ const loginUser = async (req, res) => {
 const signupUser = async (req, res) => {
   const { name, email, password } = req.body;
   
-  try {
-    // 1. Create the user
-    const user = await User.signup(name, email, password);
-    const token = createToken(user._id);
+try {
+  await sendWelcomeEmail(user.email, user.name);
+} catch (err) {
+  console.error("Welcome Email Failed:", err.message);
+  // We don't block the user signup if email fails, but we wait for the attempt
 
-    // 2. 9 CGPA: Fire the email trigger silently in the background
-    sendWelcomeEmail(user.email, user.name).catch(err => console.error("Welcome Email Failed:", err));
 
     // 3. Send the final response to the frontend
     res.status(200).json({ 
@@ -94,10 +93,7 @@ const signupUser = async (req, res) => {
       role: user.role, 
       profilePicture: user.profilePicture 
     });
-  } catch (error) {
-    const errors = handleErrors(error);
-    res.status(400).json({ errors });
-  }
+  } 
 };
 
 const getUserProfile = async (req, res) => {

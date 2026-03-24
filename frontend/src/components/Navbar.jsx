@@ -36,8 +36,9 @@ const Navbar = () => {
           height: '60px', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', gap: '8px',
         }}>
-          {/* LOGO */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, textDecoration: 'none' }}>
+          
+          {/* LOGO - Visible on both Laptop & Mobile */}
+          <Link to="/" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, textDecoration: 'none' }}>
             <div style={{ background: 'var(--accent-green)', padding: '6px', borderRadius: '9px', display: 'flex', boxShadow: 'var(--shadow-accent)' }}>
               <Mountain color="white" size={16} strokeWidth={2.5} />
             </div>
@@ -46,7 +47,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* DESKTOP NAV */}
+          {/* DESKTOP NAV - Hidden on Mobile */}
           <nav style={{ display: 'flex', alignItems: 'center', gap: '6px' }} className="hidden md:flex">
             {user ? (
               <>
@@ -104,7 +105,7 @@ const Navbar = () => {
             </button>
           </nav>
 
-          {/* MOBILE: logo + hamburger only */}
+          {/* MOBILE TOGGLE - Hidden on Laptop */}
           <button className="flex md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-primary)', alignItems: 'center', flexShrink: 0 }}>
@@ -118,7 +119,7 @@ const Navbar = () => {
         <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: 'var(--bg-primary)', zIndex: 999, overflowY: 'auto', borderTop: '1px solid var(--border-light)' }}>
           <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
 
-            {/* USER SECTION */}
+            {/* USER SECTION / AUTH BUTTONS */}
             {user ? (
               <Link to="/profile" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px', borderRadius: '16px', background: 'var(--accent-green-bg)', border: '1px solid var(--accent-green)', textDecoration: 'none', marginBottom: '4px' }}>
                 <img src={profileImg} alt="profile" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-green)', flexShrink: 0 }}
@@ -130,37 +131,31 @@ const Navbar = () => {
               </Link>
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '4px' }}>
-                <Link to="/login" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-primary)', textDecoration: 'none' }}>
-                  Sign In
-                </Link>
-                <Link to="/signup" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'white', background: 'var(--accent-green)', textDecoration: 'none', boxShadow: 'var(--shadow-accent)' }}>
-                  Join Free
-                </Link>
+                <Link to="/login" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-primary)', textDecoration: 'none' }}>Sign In</Link>
+                <Link to="/signup" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px', borderRadius: '12px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', color: 'white', background: 'var(--accent-green)', textDecoration: 'none' }}>Join Free</Link>
               </div>
             )}
 
-            {/* DIVIDER */}
             <div style={{ height: '1px', background: 'var(--border-light)', margin: '4px 0' }} />
 
-            {/* NAV LINKS */}
+            {/* NAV LINKS (ONLY FOR LOGGED IN) */}
             {user && (
               <>
                 {[
-                  { to: '/bookmarks', label: 'Saved Treks',     icon: <Bookmark size={18}/> },
-                  { to: '/create',    label: 'Add New Trek',    icon: <Plus size={18}/> },
-                  { to: '/profile',   label: 'My Profile',      icon: <User size={18}/> },
+                  { to: '/bookmarks', label: 'Saved Treks', icon: <Bookmark size={18}/> },
+                  { to: '/create', label: 'Add New Trek', icon: <Plus size={18}/> },
+                  { to: '/profile', label: 'My Profile', icon: <User size={18}/> },
                   ...(isAdmin ? [{ to: '/admin', label: 'Admin Dashboard', icon: <LayoutDashboard size={18}/> }] : []),
                 ].map(item => (
                   <Link key={item.to} to={item.to} onClick={closeMobile}
                     style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-light)', textDecoration: 'none' }}>
-                    <span style={{ color: 'var(--accent-green)', display: 'flex' }}>{item.icon}</span>
-                    {item.label}
+                    <span style={{ color: 'var(--accent-green)', display: 'flex' }}>{item.icon}</span>{item.label}
                   </Link>
                 ))}
               </>
             )}
 
-            {/* DARK MODE */}
+            {/* DARK MODE TOGGLE (ALWAYS VISIBLE IN MOBILE MENU) */}
             <button onClick={toggle}
               style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', background: 'var(--bg-card)', border: '1px solid var(--border-light)', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
               <span style={{ color: isDark ? 'var(--accent-amber)' : '#7c3aed', display: 'flex' }}>
@@ -169,12 +164,12 @@ const Navbar = () => {
               {isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </button>
 
-            {/* SIGN OUT */}
+            {/* LOGOUT BUTTON */}
             {user && (
               <>
                 <div style={{ height: '1px', background: 'var(--border-light)', margin: '4px 0' }} />
                 <button onClick={() => { logout(); closeMobile(); }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--accent-rose)', background: 'var(--accent-rose-bg)', border: '1px solid var(--accent-rose)22', cursor: 'pointer', width: '100%', textAlign: 'left' }}>
+                  style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 16px', borderRadius: '13px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--accent-rose)', background: 'var(--accent-rose-bg)', border: 'none', cursor: 'pointer', width: '100%' }}>
                   <LogOut size={18} /> Sign Out
                 </button>
               </>
@@ -192,6 +187,7 @@ const iconBtnStyle = () => ({
   display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
   textDecoration: 'none',
 });
+
 const applyHover = (e, on) => {
   e.currentTarget.style.background = on ? 'var(--accent-green-bg)' : 'transparent';
   e.currentTarget.style.color = on ? 'var(--accent-green)' : 'var(--text-muted)';
