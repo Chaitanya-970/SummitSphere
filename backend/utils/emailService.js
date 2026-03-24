@@ -8,16 +8,23 @@ const nodemailer = require('nodemailer');
 // 4. Set in your .env:  EMAIL_USER=you@gmail.com  EMAIL_PASS=xxxx-xxxx-xxxx-xxxx
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // Use the shortcut!
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // TLS
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS, // Must be an App Password, NOT your Gmail login password
+  },
+  tls: {
+    rejectUnauthorized: false, // Prevents cert errors on some servers
   },
 });
-// Verify connection on startup
+
+// Verify connection on startup — logs clearly if email config is broken
 transporter.verify((err) => {
   if (err) {
     console.error('📧 Email transporter error:', err.message);
+    console.error('   Check EMAIL_USER and EMAIL_PASS in your .env');
   } else {
     console.log('📧 Email transporter ready');
   }

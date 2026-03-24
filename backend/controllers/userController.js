@@ -1,13 +1,14 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const{sendWelcomeEmail} = require('../utils/emailService'); // 9 CGPA: Email utility
+const crypto = require('crypto');
+const { sendWelcomeEmail, sendResetEmail } = require('../utils/emailService'); 
+
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: '3d' });
 };
-const crypto = require('crypto');
-const{sendResetEmail} = require('../utils/emailService'); // 9 CGPA: Email utility
-// Error handler (Unchanged, kept for logic)
+
+// Error handler
 const handleErrors = (err) => {
   let errors = { name: '', email: '', password: '' };
 
@@ -45,7 +46,7 @@ const handleErrors = (err) => {
   return errors;
 };
 
-// LOGIN USER - FIXED TO INCLUDE ROLE & AVATAR
+// LOGIN USER
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -58,33 +59,6 @@ const loginUser = async (req, res) => {
 
     const token = createToken(user._id);
 
-    // 9 CGPA FIX: Include EVERYTHING the frontend needs
-    res.status(200).json({ 
-      name: user.name, 
-      email: user.email, 
-      token, 
-      id: user._id, 
-      role: user.role, // This makes /admin work
-      profilePicture: user.profilePicture // This makes the Navbar work
-    });
-  } catch (error) {
-    const errors = handleErrors(error);
-    res.status(400).json({ errors });
-  }
-};
-
-// SIGNUP USER - FIXED TO INCLUDE ROLE & AVATAR
-const signupUser = async (req, res) => {
-  const { name, email, password } = req.body;
-  
-try {
-  await sendWelcomeEmail(user.email, user.name);
-} catch (err) {
-  console.error("Welcome Email Failed:", err.message);
-  // We don't block the user signup if email fails, but we wait for the attempt
-
-
-    // 3. Send the final response to the frontend
     res.status(200).json({ 
       name: user.name, 
       email: user.email, 
@@ -93,9 +67,49 @@ try {
       role: user.role, 
       profilePicture: user.profilePicture 
     });
-  } 
+  } catch (error) {
+    const errors = handleErrors(error);
+    res.status(400).json({ errors });
+  }
 };
 
+// SIGNUP USER - FULLY REPAIRED
+const signupUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  
+  try {
+    // 1. Create the user in the database FIRST
+    const user = await User.signup(name, email, password);
+    
+    // 2. Generate the login token
+    const token = createToken(user._id);
+
+    // 3. Attempt to send the email (isolated so it doesn't crash the signup if it fails)
+    try {
+      await sendWelcomeEmail(user.email, user.name);
+      console.log(`📧 Welcome email dispatched to ${user.email}`);
+    } catch (emailErr) {
+      console.error("📧 Email Dispatch Failed:", emailErr.message);
+    }
+
+    // 4. Send the successful response back to the frontend
+    res.status(200).json({ 
+      name: user.name, 
+      email: user.email, 
+      token, 
+      id: user._id, 
+      role: user.role, 
+      profilePicture: user.profilePicture 
+    });
+
+  } catch (error) {
+    // 5. This catches database errors (like duplicate emails or missing fields)
+    const errors = handleErrors(error);
+    res.status(400).json({ errors });
+  }
+};
+
+// GET PROFILE
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
@@ -105,6 +119,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// UPDATE AVATAR
 const updateAvatar = async (req, res) => {
   try {
     if (!req.file) {
@@ -122,6 +137,8 @@ const updateAvatar = async (req, res) => {
     res.status(500).json({ error: "Avatar upload failed" });
   }
 };
+
+// FORGOT PASSWORD
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
@@ -130,61 +147,48 @@ const forgotPassword = async (req, res) => {
       return res.status(400).json({ error: "That email is not registered" });
     }
 
-
-    // Generate reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
     user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
     await user.save();
-// Replace the hardcoded string with the variable
-const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
-    await sendResetEmail(user.email, user.name, resetUrl);
 
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    await sendResetEmail(user.email, user.name, resetUrl);
 
     res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
-    // Reset fields if anything fails
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
+    if(user) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save();
+    }
     res.status(500).json({ error: "An error occurred while processing your request" });
   }
 };
 
+// RESET PASSWORD
 const resetPassword = async (req, res) => {
-  // 1. Grab the 'Guest Key' from the URL and the New Password from the form
   const { token } = req.params;
   const { password } = req.body;
 
   try {
-    // 2. Hash the token from the URL to match the one in our database
-    const hashedToken = crypto
-      .createHash('sha256')
-      .update(token)
-      .digest('hex');
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-    // 3. Find the explorer whose token matches AND hasn't expired
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
-      resetPasswordExpires: { $gt: Date.now() } // $gt = Greater Than (Clock check)
+      resetPasswordExpires: { $gt: Date.now() } 
     });
 
     if (!user) {
       return res.status(400).json({ error: "Access Key invalid or expired. Request a new transmission." });
     }
 
-    // 4. Update the password (Model middleware will hash this automatically)
     user.password = password;
-
-    // 5. MISSION SUCCESS: Clear the recovery fields so they can't be used again
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
     await user.save();
-
-    // 6. Optional: Send a confirmation email (Mission Restored)
-    // sendConfirmationEmail(user.email, user.name); 
 
     res.status(200).json({ message: "Access Protocol Restored. You may now log in with your new credentials." });
   } catch (error) {
