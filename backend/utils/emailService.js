@@ -14,14 +14,13 @@ const SITE_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  family: 4, // ← CRITICAL: forces IPv4, fixes ENETUNREACH on Render free tier
+  port: 465, // ← CRITICAL: Changed from 587
+  secure: true, // ← CRITICAL: Changed from false (Forces immediate SSL)
+  family: 4, // ← CRITICAL: Forces IPv4
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
-  },
-  tls: { rejectUnauthorized: false },
+  }
 });
 
 transporter.verify((err) => {
