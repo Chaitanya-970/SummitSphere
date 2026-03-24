@@ -117,7 +117,7 @@ const Navbar = () => {
 
       {/* MOBILE FULL-SCREEN MENU */}
       {mobileOpen && isMobile && (
-        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: 'var(--bg-primary)', zInternal: 999, overflowY: 'auto', borderTop: '1px solid var(--border-light)' }}>
+      <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: 'var(--bg-primary)', zIndex: 1000, overflowY: 'auto', borderTop: '1px solid var(--border-light)' }}>
           <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {user ? (
               <Link to="/profile" onClick={closeMobile} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px', borderRadius: '16px', background: 'var(--accent-green-bg)', border: '1px solid var(--accent-green)', textDecoration: 'none', marginBottom: '4px' }}>
