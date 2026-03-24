@@ -1,15 +1,14 @@
 const nodemailer = require('nodemailer');
+const net = require('net');
 
 // ── SETUP ────────────────────────────────────────────────────────────────────
-// Required .env variables on your backend (Render):
+// Required env vars on Render backend:
 //   EMAIL_USER=you@gmail.com
 //   EMAIL_PASS=xxxx-xxxx-xxxx-xxxx   ← Gmail App Password (not your login password)
-//   FRONTEND_URL=https://summitsphere-gamma.vercel.app  ← your deployed frontend URL
+//   FRONTEND_URL=https://summitsphere-gamma.vercel.app
 //
-// Gmail App Password setup:
-//   1. myaccount.google.com → Security → 2-Step Verification (enable)
-//   2. myaccount.google.com/apppasswords → create for "Mail"
-//   3. Copy the 16-character password → set as EMAIL_PASS
+// The error "ENETUNREACH IPv6" happens because Render's free tier blocks outbound
+// IPv6. Gmail SMTP resolves to IPv6 by default. Fix: force IPv4 with family:4.
 
 const SITE_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
@@ -17,6 +16,7 @@ const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
+  family: 4, // ← CRITICAL: forces IPv4, fixes ENETUNREACH on Render free tier
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -87,9 +87,9 @@ const sendWelcomeEmail = async (userEmail, userName) => {
         <a href="${SITE_URL}" style="display:inline-block;padding:13px 28px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Explore Treks →</a>
       `),
     });
-    console.log('Welcome email sent to', userEmail);
+    console.log('✅ Welcome email sent to', userEmail);
   } catch (err) {
-    console.error('Welcome email failed:', err.message);
+    console.error('❌ Welcome email failed:', err.message);
   }
 };
 
@@ -118,9 +118,9 @@ const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {})
         <a href="${SITE_URL}" style="display:inline-block;padding:12px 24px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">View on SummitSphere →</a>
       `),
     });
-    console.log('Booking email sent to', userEmail);
+    console.log('✅ Booking email sent to', userEmail);
   } catch (err) {
-    console.error('Booking email failed:', err.message);
+    console.error('❌ Booking email failed:', err.message);
   }
 };
 
@@ -133,12 +133,12 @@ const sendTrekCreatedEmail = async (adminEmail, trekName) => {
       subject: `New Trek Submitted — ${trekName}`,
       html: emailLayout(`
         <h2 style="font-family:Georgia,serif;font-style:italic;font-weight:900;font-size:24px;color:#1a1208;margin:0 0 8px;">New Trek in Queue</h2>
-        <p style="font-size:14px;color:#8c7b65;margin:0 0 20px;"><strong style="color:#1a1208;">${trekName}</strong> is awaiting review in the Command Centre.</p>
+        <p style="font-size:14px;color:#8c7b65;margin:0 0 20px;"><strong style="color:#1a1208;">${trekName}</strong> is awaiting review.</p>
         <a href="${SITE_URL}/admin" style="display:inline-block;padding:12px 24px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Review in Dashboard →</a>
       `),
     });
   } catch (err) {
-    console.error('Trek created email failed:', err.message);
+    console.error('❌ Trek created email failed:', err.message);
   }
 };
 
@@ -156,8 +156,9 @@ const sendResetEmail = async (userEmail, userName, resetUrl) => {
         <p style="font-size:12px;color:#b5a48e;margin:16px 0 0;">If you didn't request this, ignore this email.</p>
       `),
     });
+    console.log('✅ Reset email sent to', userEmail);
   } catch (err) {
-    console.error('Reset email failed:', err.message);
+    console.error('❌ Reset email failed:', err.message);
   }
 };
 

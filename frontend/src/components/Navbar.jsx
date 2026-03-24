@@ -23,12 +23,22 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   const isAdmin = user?.role === 'admin';
   const displayName = user?.name || user?.email?.split('@')[0] || 'Explorer';
   const profileImg = user?.profilePicture || DEFAULT_AVATAR;
   const close = () => setMobileOpen(false);
 
-  const menuLink = { 
+  const menuLink = {
     display: 'flex', alignItems: 'center', gap: '14px',
     padding: '14px 16px', borderRadius: '12px',
     background: 'var(--bg-card)', border: '1px solid var(--border-light)',
@@ -47,7 +57,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── HEADER ── */}
+      {/* ── STICKY HEADER ── */}
       <header style={{
         background: 'var(--bg-nav)', borderBottom: '1px solid var(--border-light)',
         backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
@@ -74,7 +84,8 @@ const Navbar = () => {
                   {isAdmin && <Link to="/admin" title="Admin" style={iconBtnStyle()} onMouseEnter={e => applyHover(e, true)} onMouseLeave={e => applyHover(e, false)}><LayoutDashboard size={18} /></Link>}
                   <Link to="/bookmarks" title="Saved" style={iconBtnStyle()} onMouseEnter={e => applyHover(e, true)} onMouseLeave={e => applyHover(e, false)}><Bookmark size={18} /></Link>
                   <Link to="/create" style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--accent-green)', color: 'white', padding: '8px 16px', borderRadius: '10px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', transition: 'all 0.2s', textDecoration: 'none' }}
-                    onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent-green-light)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'var(--accent-green)'; }}>
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-green-light)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'var(--accent-green)'}>
                     <Plus size={15} strokeWidth={2.5} /> New Trek
                   </Link>
                   <button onClick={logout} title="Sign Out" style={{ ...iconBtnStyle(), border: 'none', cursor: 'pointer' }}
@@ -114,10 +125,38 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* ── MOBILE MENU ── */}
+      {/* ── MOBILE FULL-SCREEN OVERLAY ──
+          Fixed to cover entire screen including behind the header.
+          Has its own header row with logo + close button so it's always accessible. */}
       {mobileOpen && isMobile && (
-        <div style={{ position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, background: 'var(--bg-primary)', zIndex: 999, overflowY: 'auto', borderTop: '1px solid var(--border-light)' }}>
-          <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 1001,
+          background: 'var(--bg-primary)',
+          display: 'flex', flexDirection: 'column',
+        }}>
+          {/* Menu header — always visible, never scrolls away */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '0 16px', height: '60px', flexShrink: 0,
+            borderBottom: '1px solid var(--border-light)',
+            background: 'var(--bg-nav)',
+          }}>
+            <Link to="/" onClick={close} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+              <div style={{ background: 'var(--accent-green)', padding: '6px', borderRadius: '9px', display: 'flex' }}>
+                <Mountain color="white" size={16} strokeWidth={2.5} />
+              </div>
+              <span style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '19px', letterSpacing: '-0.04em', color: 'var(--text-primary)', lineHeight: 1 }}>
+                Summit<span style={{ color: 'var(--accent-green)' }}>Sphere</span>
+              </span>
+            </Link>
+            <button onClick={close}
+              style={{ padding: '8px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', cursor: 'pointer', color: 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Scrollable menu content */}
+          <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
             {/* USER CARD or SIGN IN/JOIN */}
             {user ? (
@@ -135,7 +174,6 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* DIVIDER */}
             <div style={{ height: '1px', background: 'var(--border-light)' }} />
 
             {/* NAV LINKS */}
