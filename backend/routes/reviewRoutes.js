@@ -3,7 +3,7 @@ const router = express.Router();
 const { 
   createReview, 
   getReviewsByTrek, 
-  getReportedReviews, // Ensure this exists in controller
+  getReportedReviews, 
   reportReview, 
   resolveReview, 
   deleteReview 

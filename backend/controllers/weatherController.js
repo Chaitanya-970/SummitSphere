@@ -12,12 +12,6 @@ const getTrekWeather = async (req, res) => {
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}&units=metric`
     );
 
-    // Take the FIRST entry for each unique calendar date.
-    // This always includes today regardless of what time it is,
-    // because there will always be at least one future 3-hour slot for today.
-    // Take the FIRST entry for each unique calendar date.
-    // This always includes today regardless of what time it is,
-    // because there will always be at least one future 3-hour slot for today.
     const seen = new Set();
     const dailyData = response.data.list.filter(entry => {
       const date = entry.dt_txt.split(' ')[0];

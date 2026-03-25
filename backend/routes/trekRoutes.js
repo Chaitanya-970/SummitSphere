@@ -1,7 +1,7 @@
 const express = require('express');
 const { getTreks, getTrek, createTrek, deleteTrek, updateTrek } = require('../controllers/trekController');
 const requireAuth = require('../middleware/requireAuth');
-const upload = require('../middleware/upload'); // Your Cloudinary middleware
+const upload = require('../middleware/upload'); 
 
 const router = express.Router();
 

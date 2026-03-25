@@ -4,7 +4,6 @@ const Booking = require('../models/Booking');
 const Trek = require('../models/Trek');
 const requireAuth = require('../middleware/requireAuth');
 
-// CUSTOM MIDDLEWARE: The "Commander" Gatekeeper
 const adminOnly = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next();
@@ -57,7 +56,6 @@ router.delete('/treks/:id', requireAuth, adminOnly, async (req, res) => {
   }
 });
 
-// 1. UPDATE: GET ALL BOOKINGS (Filtered)
 router.get('/bookings', requireAuth, adminOnly, async (req, res) => {
   try {
     const activeBookings = await Booking.find({ isCleared: { $ne: true } })
@@ -71,10 +69,8 @@ router.get('/bookings', requireAuth, adminOnly, async (req, res) => {
   }
 });
 
-// 2. NEW: THE "CLEAR BOOKING" ACTION
 router.patch('/bookings/:id/clear', requireAuth, adminOnly, async (req, res) => {
   try {
-    // We mark it as cleared so it vanishes from the dashboard but stays in DB
     await Booking.findByIdAndUpdate(req.params.id, { isCleared: true });
     res.status(200).json({ message: "Booking dismissed from ledger." });
   } catch (error) {

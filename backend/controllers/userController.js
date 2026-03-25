@@ -8,7 +8,6 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: '3d' });
 };
 
-// Error handler
 const handleErrors = (err) => {
   let errors = { name: '', email: '', password: '' };
 
@@ -46,7 +45,6 @@ const handleErrors = (err) => {
   return errors;
 };
 
-// LOGIN USER
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -73,18 +71,14 @@ const loginUser = async (req, res) => {
   }
 };
 
-// SIGNUP USER - FULLY REPAIRED
 const signupUser = async (req, res) => {
   const { name, email, password } = req.body;
   
   try {
-    // 1. Create the user in the database FIRST
     const user = await User.signup(name, email, password);
     
-    // 2. Generate the login token
     const token = createToken(user._id);
 
-    // 3. Attempt to send the email (isolated so it doesn't crash the signup if it fails)
     try {
       await sendWelcomeEmail(user.email, user.name);
       console.log(`Welcome email dispatched to ${user.email}`);
@@ -92,7 +86,6 @@ const signupUser = async (req, res) => {
       console.error("Email Dispatch Failed:", emailErr.message);
     }
 
-    // 4. Send the successful response back to the frontend
     res.status(200).json({ 
       name: user.name, 
       email: user.email, 
@@ -103,13 +96,11 @@ const signupUser = async (req, res) => {
     });
 
   } catch (error) {
-    // 5. This catches database errors (like duplicate emails or missing fields)
     const errors = handleErrors(error);
     res.status(400).json({ errors });
   }
 };
 
-// GET PROFILE
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
@@ -119,7 +110,6 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// UPDATE AVATAR
 const updateAvatar = async (req, res) => {
   try {
     if (!req.file) {
@@ -138,7 +128,6 @@ const updateAvatar = async (req, res) => {
   }
 };
 
-// FORGOT PASSWORD
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
@@ -167,7 +156,6 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// RESET PASSWORD
 const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;

@@ -11,7 +11,6 @@ router.post('/', async (req, res) => {
   const { trekId, fullName, groupSize, trekDate, email, phone } = req.body;
 
   try {
-    // 1. Create the booking
     const booking = await Booking.create({
       trekId,
       userId: req.user._id,
@@ -22,11 +21,9 @@ router.post('/', async (req, res) => {
       phone,
     });
 
-    // 2. Fetch full trek details for the rich confirmation email
     const trek = await Trek.findById(trekId);
     const trekName = trek?.name || 'Your Expedition';
 
-    // 3. Send rich booking confirmation email with all trek details
     sendBookingEmail(
       req.user.email,
       fullName || req.user.name,

@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   } catch (err) { res.status(400).json({ error: 'Radar failure' }); }
 });
 
-// POST a new bookmark
+
 router.post('/', async (req, res) => {
   try {
     const bookmark = await Bookmark.create({ userId: req.user._id, trekId: req.body.trekId });
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
   } catch (err) { res.status(400).json({ error: 'Already bookmarked or system error' }); }
 });
 
-// DELETE a bookmark
+
 router.delete('/:trekId', async (req, res) => {
   try {
     await Bookmark.findOneAndDelete({ userId: req.user._id, trekId: req.params.trekId });
