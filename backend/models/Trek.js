@@ -10,7 +10,6 @@ const trekSchema = new mongoose.Schema({
   imageUrl:     { type: String },
   user_id:      { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
-  // Fields present in seed data — were silently dropped without these
   startPoint:   { type: String },
   endPoint:     { type: String },
   groupSize:    { type: String },
@@ -26,12 +25,12 @@ const trekSchema = new mongoose.Schema({
     title:        { type: String, required: true },
     description:  { type: String },
     locationName: { type: String },
-    coordinates:  { type: [Number], required: true } // [longitude, latitude]
+    coordinates:  { type: [Number], required: true }
   }],
 
   geometry: {
     type:        { type: String, enum: ['Point'], default: 'Point' },
-    coordinates: { type: [Number], required: true } // [longitude, latitude]
+    coordinates: { type: [Number], required: true }
   },
 
   isModerated: { type: Boolean, default: false },

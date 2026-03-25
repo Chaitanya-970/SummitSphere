@@ -21,7 +21,6 @@ export const useLogin = () => {
 
       if (!response.ok) {
         setIsLoading(false);
-        // Backend returns { errors: { email, password } } — extract first non-empty message
         const msg = json?.errors
           ? Object.values(json.errors).find(Boolean)
           : json.error || 'Login failed';

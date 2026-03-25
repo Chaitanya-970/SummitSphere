@@ -1,22 +1,13 @@
 const nodemailer = require('nodemailer');
 const net = require('net');
 
-// ── SETUP ────────────────────────────────────────────────────────────────────
-// Required env vars on Render backend:
-//   EMAIL_USER=you@gmail.com
-//   EMAIL_PASS=xxxx-xxxx-xxxx-xxxx   ← Gmail App Password (not your login password)
-//   FRONTEND_URL=https://summitsphere-gamma.vercel.app
-//
-// The error "ENETUNREACH IPv6" happens because Render's free tier blocks outbound
-// IPv6. Gmail SMTP resolves to IPv6 by default. Fix: force IPv4 with family:4.
-
 const SITE_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465, // ← CRITICAL: Changed from 587
-  secure: true, // ← CRITICAL: Changed from false (Forces immediate SSL)
-  family: 4, // ← CRITICAL: Forces IPv4
+  port: 465,
+  secure: true,
+  family: 4,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -25,13 +16,12 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify((err) => {
   if (err) {
-    console.error('📧 Email error:', err.message);
+    console.error('Email error:', err.message);
   } else {
-    console.log('📧 Email ready →', process.env.EMAIL_USER);
+    console.log('Email ready ->', process.env.EMAIL_USER);
   }
 });
 
-// ── LAYOUT ───────────────────────────────────────────────────────────────────
 const emailLayout = (body) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +56,6 @@ const emailLayout = (body) => `
 </body>
 </html>`;
 
-// ── WELCOME ──────────────────────────────────────────────────────────────────
 const sendWelcomeEmail = async (userEmail, userName) => {
   try {
     await transporter.sendMail({
@@ -79,20 +68,19 @@ const sendWelcomeEmail = async (userEmail, userName) => {
         <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
           ${['Discover 25+ verified Himalayan treks','Save treks to your personal radar','Download field manuals as PDF','Write reviews and share experiences'].map(f => `
           <tr><td style="padding:8px 0;border-bottom:1px solid #ede8df;">
-            <span style="font-size:16px;margin-right:10px;">✓</span>
+            <span style="font-size:16px;margin-right:10px;">•</span>
             <span style="font-size:14px;color:#4a3f2f;font-weight:600;">${f}</span>
           </td></tr>`).join('')}
         </table>
         <a href="${SITE_URL}" style="display:inline-block;padding:13px 28px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Explore Treks →</a>
       `),
     });
-    console.log('✅ Welcome email sent to', userEmail);
+    console.log('Welcome email sent to', userEmail);
   } catch (err) {
-    console.error('❌ Welcome email failed:', err.message);
+    console.error('Welcome email failed:', err.message);
   }
 };
 
-// ── BOOKING ──────────────────────────────────────────────────────────────────
 const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {}) => {
   const { duration, difficulty, maxAltitude, trekDate, groupSize } = trekDetails;
   const formattedDate = trekDate ? new Date(trekDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'TBD';
@@ -103,7 +91,7 @@ const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {})
       subject: `Booking Confirmed — ${trekName} 🏔️`,
       html: emailLayout(`
         <div style="display:inline-block;padding:4px 12px;background:#d8f3dc;border-radius:20px;margin-bottom:16px;">
-          <span style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#2d6a4f;">Booking Confirmed ✓</span>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#2d6a4f;">Booking Confirmed</span>
         </div>
         <h2 style="font-family:Georgia,serif;font-style:italic;font-weight:900;font-size:26px;color:#1a1208;margin:0 0 4px;">${trekName}</h2>
         <p style="font-size:14px;color:#8c7b65;margin:0 0 24px;">Hi ${userName}, your slot has been logged.</p>
@@ -117,13 +105,12 @@ const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {})
         <a href="${SITE_URL}" style="display:inline-block;padding:12px 24px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">View on SummitSphere →</a>
       `),
     });
-    console.log('✅ Booking email sent to', userEmail);
+    console.log('Booking email sent to', userEmail);
   } catch (err) {
-    console.error('❌ Booking email failed:', err.message);
+    console.error('Booking email failed:', err.message);
   }
 };
 
-// ── TREK CREATED ─────────────────────────────────────────────────────────────
 const sendTrekCreatedEmail = async (adminEmail, trekName) => {
   try {
     await transporter.sendMail({
@@ -137,11 +124,10 @@ const sendTrekCreatedEmail = async (adminEmail, trekName) => {
       `),
     });
   } catch (err) {
-    console.error('❌ Trek created email failed:', err.message);
+    console.error('Trek created email failed:', err.message);
   }
 };
 
-// ── PASSWORD RESET ────────────────────────────────────────────────────────────
 const sendResetEmail = async (userEmail, userName, resetUrl) => {
   try {
     await transporter.sendMail({
@@ -155,9 +141,9 @@ const sendResetEmail = async (userEmail, userName, resetUrl) => {
         <p style="font-size:12px;color:#b5a48e;margin:16px 0 0;">If you didn't request this, ignore this email.</p>
       `),
     });
-    console.log('✅ Reset email sent to', userEmail);
+    console.log('Reset email sent to', userEmail);
   } catch (err) {
-    console.error('❌ Reset email failed:', err.message);
+    console.error('Reset email failed:', err.message);
   }
 };
 

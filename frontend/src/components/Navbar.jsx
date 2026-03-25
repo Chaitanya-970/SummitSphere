@@ -23,7 +23,6 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden';
@@ -57,7 +56,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── STICKY HEADER ── */}
       <header style={{
         background: 'var(--bg-nav)', borderBottom: '1px solid var(--border-light)',
         backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',

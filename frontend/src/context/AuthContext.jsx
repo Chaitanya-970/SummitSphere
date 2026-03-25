@@ -9,7 +9,6 @@ export const authReducer = (state, action) => {
     case 'LOGOUT':
       return { user: null };
     case 'UPDATE_USER':
-      // Merge updated fields back into existing user, keeping the token
       return { user: { ...state.user, ...action.payload } };
     default:
       return state;
@@ -31,7 +30,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   }, []);
 
-  // Persist user changes (including profile picture updates) to localStorage
   useEffect(() => {
     if (authReady && state.user) {
       localStorage.setItem('user', JSON.stringify(state.user));

@@ -46,7 +46,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /api/bookings/my-bookings — user's own bookings (used by Profile page)
 router.get('/my-bookings', async (req, res) => {
   try {
     const bookings = await Booking.find({ userId: req.user._id })

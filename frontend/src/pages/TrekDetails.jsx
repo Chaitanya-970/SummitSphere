@@ -287,7 +287,7 @@ const TrekDetails = () => {
       <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '36px 24px 80px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '28px' }} className="trek-detail-grid">
 
-          {/* ── LEFT COLUMN ── */}
+          {/* LEFT COLUMN */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
 
             {/* OWNER CONTROLS */}
@@ -355,7 +355,7 @@ const TrekDetails = () => {
             </div>
           </div>
 
-          {/* ── RIGHT SIDEBAR ── */}
+          {/* RIGHT SIDEBAR */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
             {/* WEATHER */}
@@ -375,7 +375,7 @@ const TrekDetails = () => {
               <TrekMap itinerary={trek.itinerary} />
             </div>
 
-            {/* ── TRIP DETAILS ── */}
+            {/* TRIP DETAILS  */}
             <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: '16px', padding: '18px', boxShadow: 'var(--shadow-sm)' }}>
               <h4 style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '14px' }}>At a Glance</h4>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -389,10 +389,10 @@ const TrekDetails = () => {
               </div>
             </div>
 
-            {/* ── BEST SEASON ── */}
+            {/*  BEST SEASON  */}
             <BestSeasonCard state={trek.state} />
 
-            {/* ── READY TO TREK CTA ── */}
+            {/* READY TO TREK CTA  */}
             <div style={{ background: 'linear-gradient(160deg, #0d1a14 0%, #1a3a2a 100%)', borderRadius: '16px', padding: '22px', color: 'white', border: '1px solid #2d6a4f40' }}>
               <h4 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '20px', marginBottom: '6px', lineHeight: 1.1 }}>Ready to Trek?</h4>
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px', lineHeight: 1.55 }}>

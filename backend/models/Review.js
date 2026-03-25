@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema({
   userName: { 
     type: String, 
     required: true,
-    default: "Trekker" // We'll replace this with real Auth names later
+    default: "Trekker"
   },
   rating: { 
     type: Number, 
@@ -25,12 +25,12 @@ const reviewSchema = new mongoose.Schema({
     type: String, 
     maxlength: 1000,
     required: false,
-    default: "" // Ensure it's never null/undefined
+    default: ""
   }  ,
   photos: {
-    type: [String], // Array of Cloudinary URLs
+    type: [String],
     required: false,
-    default: [] // Default to empty array if no photos are uploaded
+    default: []
   },
   isReported: { 
     type: Boolean, 

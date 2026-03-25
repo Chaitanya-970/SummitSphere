@@ -14,7 +14,7 @@ const PhotoLightbox = ({ photos, startIndex, onClose }) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  // keyboard nav
+
   const handleKey = (e) => {
     if (e.key === 'Escape') onClose();
     if (e.key === 'ArrowLeft') prev();

@@ -72,7 +72,6 @@ const TrekCard = ({ trek }) => {
 
       {/* IMAGE with skeleton while loading */}
       <Link to={`/trek/${trek._id}`} style={{ display: 'block', height: '220px', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
-        {/* Skeleton shown until image loads */}
         {!imgLoaded && (
           <div className="shimmer" style={{ position: 'absolute', inset: 0 }} />
         )}

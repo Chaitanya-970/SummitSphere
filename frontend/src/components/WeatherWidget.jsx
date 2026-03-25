@@ -11,8 +11,6 @@ const WeatherWidget = ({ lat, lon }) => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/weather?lat=${lat}&lon=${lon}`);
         const data = await res.json();
-        // Backend now returns first-entry-per-day, already sliced to 5.
-        // We just consume it directly.
         setForecast(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('Weather fetch error:', err);
@@ -30,14 +28,12 @@ const WeatherWidget = ({ lat, lon }) => {
 
   const current = forecast[selectedIndex];
 
-  // Always show real weekday — never "Today/Yesterday"
   const weekday = (entry) =>
     new Date(entry.dt * 1000).toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
-      {/* ── 5-DAY STRIP ── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '5px' }}>
         {forecast.map((day, i) => {
           const sel = selectedIndex === i;
@@ -67,7 +63,6 @@ const WeatherWidget = ({ lat, lon }) => {
         })}
       </div>
 
-      {/* ── DETAIL CARD ── */}
       <div style={{
         background: 'linear-gradient(135deg, #0d1a14 0%, #1a3a2a 100%)',
         borderRadius: '14px', padding: '18px 20px', color: 'white',

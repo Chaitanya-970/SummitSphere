@@ -87,9 +87,9 @@ const signupUser = async (req, res) => {
     // 3. Attempt to send the email (isolated so it doesn't crash the signup if it fails)
     try {
       await sendWelcomeEmail(user.email, user.name);
-      console.log(`📧 Welcome email dispatched to ${user.email}`);
+      console.log(`Welcome email dispatched to ${user.email}`);
     } catch (emailErr) {
-      console.error("📧 Email Dispatch Failed:", emailErr.message);
+      console.error("Email Dispatch Failed:", emailErr.message);
     }
 
     // 4. Send the successful response back to the frontend

@@ -1,59 +1,35 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const fs = require('fs');
-const path = require('path');
-
 const Trek = require('./models/Trek');
 const User = require('./models/User');
-const { seedReviews } = require('./reviewSeed'); // <-- just import
-
-const generatePath = (baseCoords, duration) => {
-  const [lon, lat] = baseCoords;
-  return Array.from({ length: duration }, (_, i) => {
-    const offset = i * 0.005;
-    return [lon + offset, lat + (offset * 0.7)];
-  });
-};
 
 const seedDatabase = async () => {
   try {
-    console.log("🔌 Connecting to MongoDB...");
     await mongoose.connect(process.env.MONGO_URI);
-const existing = await Trek.countDocuments();
-if (existing > 0) {
-  console.log(`⚠️  ${existing} treks already in DB. Pass --force to reseed.`);
-  if (!process.argv.includes('--force')) { process.exit(0); }
-}
-    const dataPath = path.join(__dirname, 'treksSeed.json');
-    const treksData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
-    const adminUser = await User.findOne();
-    if (!adminUser) throw new Error("Register an account on the website first, then run this seeder.");
+    const treksData = JSON.parse(fs.readFileSync('./treksSeed.json', 'utf-8'));
+    
+    const admin = await User.findOne();
+    if (!admin) throw new Error("Register a user on the site first.");
 
-    // ── STEP 1: TREKS ──────────────────────────────────────────
-    console.log("🧹 Clearing old trek data...");
-
-    console.log(`🚀 Seeding ${treksData.length} treks with map paths...`);
-    const treksToInsert = treksData.map(trek => {
-      const pathCoords = generatePath(trek.geometry.coordinates, trek.duration);
-      const updatedItinerary = trek.itinerary.map((day, index) => ({
+    await Trek.deleteMany({});
+    
+    const treks = treksData.map(t => ({
+      ...t,
+      user_id: admin._id,
+      itinerary: t.itinerary.map((day, i) => ({
         ...day,
-        coordinates: pathCoords[index],
-      }));
-      return { ...trek, itinerary: updatedItinerary, user_id: adminUser._id };
-    });
 
-    await Trek.insertMany(treksToInsert);
-    console.log(`✅ ${treksData.length} treks seeded.`);
+        coordinates: [t.geometry.coordinates[0] + (i * 0.01), t.geometry.coordinates[1] + (i * 0.01)]
+      }))
+    }));
 
-    // ── STEP 2: REVIEWS (reuse reviewSeed logic, same connection) ──
-    console.log("\n📝 Seeding reviews...");
-    await seedReviews();
-
-    console.log("\n🎉 Full database seed complete!");
+    await Trek.insertMany(treks);
+    console.log(` Success: ${treks.length} treks seeded.`);
     process.exit(0);
-  } catch (error) {
-    console.error("🚨 Seeding failed:", error.message);
+  } catch (err) {
+    console.error(err.message);
     process.exit(1);
   }
 };

@@ -79,7 +79,6 @@ const Profile = () => {
     formData.append('name', name);
     if (selectedFile) formData.append('image', selectedFile);
     try {
-      // FIX: backend uses PUT not PATCH for update-avatar
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/user/update-avatar`, {
         method: 'PUT',
         body: formData,
@@ -87,7 +86,6 @@ const Profile = () => {
       });
       const json = await response.json();
       if (response.ok) {
-        // Merge updated fields but keep existing token + id
         dispatch({
           type: 'UPDATE_USER',
           payload: {
@@ -196,9 +194,7 @@ const Profile = () => {
             ) : listData.length > 0 ? (
               <div style={{ display: 'grid', gap: '10px' }}>
                 {listData.map(item => {
-                  // authored: item IS the trek
-                  // booked:   item is a Booking, trek is item.trekId
-                  // radar:    item is a Bookmark, trek is item.trekId
+
                   const isNested = activeTab === 'booked' || activeTab === 'radar';
                   const trek = isNested ? item.trekId : item;
                   const trekId = trek?._id;
@@ -236,7 +232,7 @@ const Profile = () => {
   );
 };
 
-// ── PER-TAB EMPTY STATES ─────────────────────────────────────
+//  PER-TAB EMPTY STATES
 const EmptyTabState = ({ tab }) => {
   const config = {
     authored: {

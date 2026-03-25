@@ -84,7 +84,6 @@ const AdminDashboard = () => {
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', padding: '40px 24px 80px', transition: 'background 0.3s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
-        {/* HEADER */}
         <div style={{ marginBottom: '28px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
             <div style={{ width: '40px', height: '40px', background: 'var(--accent-green-bg)', borderRadius: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -119,7 +118,7 @@ const AdminDashboard = () => {
           ))}
         </div>
 
-        {/* ── BOOKINGS ── */}
+        {/* BOOKINGS  */}
         {activeTab === 'bookings' && (
           bookings.length === 0
             ? <EmptyState icon={Inbox} title="All Clear" subtitle="No active bookings to review." />
@@ -173,7 +172,7 @@ const AdminDashboard = () => {
             )
         )}
 
-        {/* ── MODERATION ── */}
+        {/* MODERATION */}
         {activeTab === 'moderation' && (
           reportedReviews.length === 0
             ? <EmptyState icon={ShieldAlert} title="All Clear" subtitle="No reported reviews to moderate." />

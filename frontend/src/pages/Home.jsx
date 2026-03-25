@@ -6,7 +6,6 @@ import DiscoveryBar from '../components/DiscoveryBar';
 import { useDebounce } from '../hooks/useDebounce';
 import Footer from '../components/Footer';
 
-// --- THE DETERMINISTIC IMAGE HASH (DO NOT MODIFY) ---
 const TREK_IMAGES = [
   "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80",
   "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?w=800&q=80",
@@ -90,9 +89,7 @@ const Home = () => {
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, var(--bg-primary) 100%)' }} />
 
-        {/* Hero content */}
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 16px', width: '100%', boxSizing: 'border-box' }}>
-          {/* Pill badge */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 18px', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.2)', marginBottom: '24px' }}>
             <Mountain size={13} color="white" strokeWidth={2.5} />
             <span style={{ color: 'white', fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>India's Trail Network</span>

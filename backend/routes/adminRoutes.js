@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Booking = require('../models/Booking');
-const Trek = require('../models/Trek'); // <--- ADD THIS LINE OR IT WILL CRASH
+const Trek = require('../models/Trek');
 const requireAuth = require('../middleware/requireAuth');
 
 // CUSTOM MIDDLEWARE: The "Commander" Gatekeeper
@@ -13,7 +13,6 @@ const adminOnly = (req, res, next) => {
   }
 };
 
-// GET ALL BOOKINGS (The Ledger View)
 router.get('/bookings', requireAuth, adminOnly, async (req, res) => {
   try {
     const allBookings = await Booking.find()
@@ -27,12 +26,11 @@ router.get('/bookings', requireAuth, adminOnly, async (req, res) => {
   }
 });
 
-// GET UNMODERATED TREKS (The "Inbox")
 router.get('/treks/queue', requireAuth, adminOnly, async (req, res) => {
   try {
     const queue = await Trek.find({ 
-      userId: { $ne: req.user._id }, // Not my treks
-      isModerated: false             // Only those not yet "Cleared"
+      userId: { $ne: req.user._id },
+      isModerated: false
     }).sort({ createdAt: -1 });
 
     res.status(200).json(queue);
@@ -41,7 +39,6 @@ router.get('/treks/queue', requireAuth, adminOnly, async (req, res) => {
   }
 });
 
-// THE "CLEAR" ACTION (Removes from Inbox, Stays on Home)
 router.patch('/treks/:id/clear', requireAuth, adminOnly, async (req, res) => {
   try {
     await Trek.findByIdAndUpdate(req.params.id, { isModerated: true });
@@ -51,7 +48,6 @@ router.patch('/treks/:id/clear', requireAuth, adminOnly, async (req, res) => {
   }
 });
 
-// THE "GLOBAL DELETE" ACTION (Nukes it everywhere)
 router.delete('/treks/:id', requireAuth, adminOnly, async (req, res) => {
   try {
     await Trek.findByIdAndDelete(req.params.id);
@@ -64,7 +60,6 @@ router.delete('/treks/:id', requireAuth, adminOnly, async (req, res) => {
 // 1. UPDATE: GET ALL BOOKINGS (Filtered)
 router.get('/bookings', requireAuth, adminOnly, async (req, res) => {
   try {
-    // Only fetch bookings that HAVEN'T been cleared by the admin
     const activeBookings = await Booking.find({ isCleared: { $ne: true } })
       .populate('trekId', 'name maxAltitude duration imageUrl') 
       .populate('userId', 'name email profilePicture')

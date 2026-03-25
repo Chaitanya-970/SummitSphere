@@ -23,10 +23,8 @@ const Footer = () => (
   }}>
     <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-      {/* TOP SECTION */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '48px', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '48px' }}>
 
-        {/* BRAND COLUMN */}
         <div style={{ flex: '1', minWidth: '220px', maxWidth: '300px' }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
             <div style={{ background: 'var(--accent-green)', padding: '8px', borderRadius: '10px', boxShadow: 'var(--shadow-accent)', display: 'flex' }}>
@@ -40,7 +38,6 @@ const Footer = () => (
             India's trail guide for every peak, ridge, and ridgeline worth chasing.
           </p>
 
-          {/* SOCIAL LINKS */}
           <div style={{ display: 'flex', gap: '10px' }}>
             <a
               href="https://github.com/Chaitanya-970"

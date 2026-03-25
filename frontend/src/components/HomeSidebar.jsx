@@ -2,12 +2,11 @@ import { Link } from 'react-router-dom';
 import { Mountain, Star, MapPin, TrendingUp } from 'lucide-react';
 
 const HomeSidebar = ({ user }) => {
-  if (user) return null; // logged-in users don't need the signup prompt
+  if (user) return null;
 
   return (
     <div style={{ position: 'sticky', top: '82px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-      {/* JOIN CTA */}
       <div style={{
         background: 'linear-gradient(150deg, #0d1a14 0%, #1a3a2a 100%)',
         borderRadius: '18px', padding: '28px 24px', textAlign: 'center',

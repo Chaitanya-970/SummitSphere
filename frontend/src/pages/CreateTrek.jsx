@@ -61,7 +61,6 @@ const CreateTrek = () => {
     Object.keys(formData).forEach(key => data.append(key, formData[key]));
     data.append('image', image);
     data.append('itinerary', JSON.stringify(itinerary));
-    // geometry field required by Trek model schema as { type: 'Point', coordinates: [lon, lat] }
     const [lat, lon] = itinerary[0].coordinates;
     data.append('geometry', JSON.stringify({ type: 'Point', coordinates: [lon, lat] }));
     try {

@@ -37,14 +37,11 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
 }, { timestamps: true });
 
-// Hash password before saving
 userSchema.pre('save', async function() {
   if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-// Static signup method — called by signupUser controller
-// This was missing, causing every signup to crash with "User.signup is not a function"
 userSchema.statics.signup = async function(name, email, password) {
   if (!name || !email || !password) throw Error('All fields must be filled');
 

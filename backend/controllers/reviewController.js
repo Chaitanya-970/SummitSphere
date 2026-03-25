@@ -1,6 +1,5 @@
 const Review = require('../models/Review');
 
-// @desc    Create a new review (Explorer/User)
 const createReview = async (req, res) => {
   try {
     const { trekId, rating, comment, userName } = req.body;
@@ -24,7 +23,6 @@ const createReview = async (req, res) => {
   }
 };
 
-// @desc    Get Reported Reviews (Admin Moderation Feed)
 const getReportedReviews = async (req, res) => {
   try {
     if (req.user.role !== 'admin') return res.status(403).json({ error: 'Unauthorized' });
@@ -38,7 +36,6 @@ const getReportedReviews = async (req, res) => {
   }
 };
 
-// @desc    Get reviews for a specific trek
 const getReviewsByTrek = async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,7 +46,6 @@ const getReviewsByTrek = async (req, res) => {
   }
 };
 
-// @desc    User flags a review (Sentinel Signal)
 const reportReview = async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,7 +56,6 @@ const reportReview = async (req, res) => {
   }
 };
 
-// @desc    Admin clears a report (Justice of the Peace)
 const resolveReview = async (req, res) => {
   try {
     const { id } = req.params;
@@ -71,7 +66,6 @@ const resolveReview = async (req, res) => {
   }
 };
 
-// @desc    Delete Review (Role-Restricted Delete)
 const deleteReview = async (req, res) => {
   try {
     const { id } = req.params;
@@ -82,7 +76,6 @@ const deleteReview = async (req, res) => {
     const isAdmin = req.user.role === 'admin';
     const isOwner = review.userId && review.userId.toString() === req.user._id.toString();
 
-    // 9 CGPA RULE: Admin Restraint
     if (isAdmin && !isOwner) {
       // Admin is not the owner: CAN ONLY DELETE IF REPORTED
       if (!review.isReported) {

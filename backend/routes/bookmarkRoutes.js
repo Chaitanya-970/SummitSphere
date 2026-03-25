@@ -5,16 +5,12 @@ const requireAuth = require('../middleware/requireAuth');
 
 router.use(requireAuth);
 
-// GET all bookmarks for the logged-in user
-// Filter out bookmarks whose trek has been deleted (trekId populates as null)
 router.get('/', async (req, res) => {
   try {
     const bookmarks = await Bookmark.find({ userId: req.user._id }).populate('trekId');
 
-    // Remove stale bookmarks where the trek no longer exists
     const valid = bookmarks.filter(b => b.trekId !== null);
 
-    // Also clean up the stale ones from DB silently so they don't accumulate
     const staleIds = bookmarks.filter(b => b.trekId === null).map(b => b._id);
     if (staleIds.length > 0) {
       await Bookmark.deleteMany({ _id: { $in: staleIds } });

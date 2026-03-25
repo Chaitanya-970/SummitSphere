@@ -9,7 +9,6 @@ router.post('/login', loginUser);
 router.post('/signup', signupUser);
 router.get('/profile', requireAuth, getUserProfile);
 
-// Accept both PUT and PATCH — frontend sends PATCH, keeping PUT for backward compat
 router.put('/update-avatar', requireAuth, upload.single('image'), updateAvatar);
 router.patch('/update-avatar', requireAuth, upload.single('image'), updateAvatar);
 

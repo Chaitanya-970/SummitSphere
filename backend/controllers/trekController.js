@@ -1,7 +1,6 @@
 const Trek = require('../models/Trek');
 const mongoose = require('mongoose');
-const {sendTrekCreationEmail} = require('../utils/emailService'); // 9 CGPA: Email utility
-// CREATE a trek
+const {sendTrekCreationEmail} = require('../utils/emailService');
 const createTrek = async (req, res) => {
   const { name, state, difficulty, duration, maxAltitude, description, itinerary, geometry } = req.body;
 
@@ -19,24 +18,20 @@ const createTrek = async (req, res) => {
   try {
     const user_id = req.user._id;
     
-    // 1. Save the trek to the database
     const trek = await Trek.create({
       name, state, difficulty, duration, maxAltitude, 
       description, imageUrl, user_id, itinerary, geometry,
-      isModerated: false // Ensures it hits the Admin Inbox
+      isModerated: false
     });
 
-    // 2. 9 CGPA: Fire the email trigger silently in the background
     sendTrekCreatedEmail(req.user.email, trek.name).catch(err => console.error("Trek Email Failed:", err));
 
-    // 3. Send the response
     res.status(200).json(trek);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-// GET all treks (Home Page Feed)
 const getTreks = async (req, res) => {
   try {
     const { name, difficulty, state, duration, lat, lng, sort } = req.query;
@@ -52,7 +47,6 @@ const getTreks = async (req, res) => {
 
     let trekQuery;
 
-    // GEOSPATIAL SEARCH
     if (lat && lng && lat !== 'null' && lng !== 'null') {
       query.geometry = {
         $near: {
@@ -65,7 +59,6 @@ const getTreks = async (req, res) => {
       };
       trekQuery = Trek.find(query).populate('user_id', 'name');
     } else {
-      // STANDARD SEARCH & SORTING
       trekQuery = Trek.find(query).populate('user_id', 'name');
 
       if (sort === 'alt-high') trekQuery = trekQuery.sort({ maxAltitude: -1 });
@@ -82,7 +75,6 @@ const getTreks = async (req, res) => {
   }
 };
 
-// GET a single trek
 const getTrek = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -95,14 +87,12 @@ const getTrek = async (req, res) => {
   res.status(200).json(trek);
 };
 
-// DELETE a trek (Admin & Owner Override)
 const deleteTrek = async (req, res) => {
   const { id } = req.params;
   try {
     const trek = await Trek.findById(id);
     if (!trek) return res.status(404).json({ error: 'Trek not found' });
 
-    // 9 CGPA FIX: Naming must match the schema (user_id)
     const isOwner = trek.user_id.toString() === req.user._id.toString();
     const isAdmin = req.user.role === 'admin';
 
@@ -117,7 +107,6 @@ const deleteTrek = async (req, res) => {
   }
 };
 
-// UPDATE a trek (Admin & Owner Override)
 const updateTrek = async (req, res) => {
   const { id } = req.params;
   try {

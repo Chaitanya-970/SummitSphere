@@ -8,7 +8,6 @@ const Booking = () => {
   const { id } = useParams();
   const [trekName, setTrekName] = useState('');
 
-  // Fetch trek name so BookingForm can show it in the UI and success message
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/treks/${id}`)
       .then(res => setTrekName(res.data?.name || ''))

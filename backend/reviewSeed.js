@@ -43,7 +43,7 @@ const seedReviews = async () => {
   const treks = await Trek.find({});
   if (treks.length === 0) throw new Error("No treks found. Run the trek seeder first!");
 
-  console.log("🧹 Clearing old reviews...");
+  console.log("Clearing old reviews...");
 
   const allReviews = [];
   treks.forEach(trek => {
@@ -53,7 +53,7 @@ const seedReviews = async () => {
     for (let i = 0; i < numReviews; i++) {
       allReviews.push({
         trekId:     trek._id,
-        userId:     user._id.toString(), // Schema expects String — do not change
+        userId:     user._id.toString(),
         userName:   shuffledNames[i % shuffledNames.length],
         rating:     shuffledComments[i].rating,
         comment:    shuffledComments[i].comment,
@@ -62,11 +62,11 @@ const seedReviews = async () => {
         createdAt:  new Date(Date.now() - Math.floor(Math.random() * 7_776_000_000)),
       });
     }
-    console.log(`✍️  Added ${numReviews} reviews for: ${trek.name}`);
+    console.log(`Added ${numReviews} reviews for: ${trek.name}`);
   });
 
   await Review.insertMany(allReviews);
-  console.log(`\n🎉 ${allReviews.length} reviews seeded across ${treks.length} treks.`);
+  console.log(`\n${allReviews.length} reviews seeded across ${treks.length} treks.`);
 };
 
 module.exports = { seedReviews };
@@ -76,5 +76,5 @@ if (require.main === module) {
   mongoose.connect(process.env.MONGO_URI)
     .then(() => seedReviews())
     .then(() => process.exit(0))
-    .catch(err => { console.error("🚨 Failed:", err.message); process.exit(1); });
+    .catch(err => { console.error("Failed:", err.message); process.exit(1); });
 }

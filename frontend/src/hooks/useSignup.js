@@ -3,7 +3,7 @@ import { useAuthContext } from './useAuthContext';
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Changed null to false for safety
+  const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
   const signup = async (name, email, password) => {
@@ -11,7 +11,6 @@ export const useSignup = () => {
     setError(null);
 
     try {
-      // Changed endpoint from /api/auth to /api/user to match your userRoutes.js
       const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/user/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

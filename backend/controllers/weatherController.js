@@ -15,9 +15,12 @@ const getTrekWeather = async (req, res) => {
     // Take the FIRST entry for each unique calendar date.
     // This always includes today regardless of what time it is,
     // because there will always be at least one future 3-hour slot for today.
+    // Take the FIRST entry for each unique calendar date.
+    // This always includes today regardless of what time it is,
+    // because there will always be at least one future 3-hour slot for today.
     const seen = new Set();
     const dailyData = response.data.list.filter(entry => {
-      const date = entry.dt_txt.split(' ')[0]; // "YYYY-MM-DD"
+      const date = entry.dt_txt.split(' ')[0];
       if (!seen.has(date)) {
         seen.add(date);
         return true;
@@ -25,7 +28,6 @@ const getTrekWeather = async (req, res) => {
       return false;
     });
 
-    // Return exactly 5 days
     res.status(200).json(dailyData.slice(0, 5));
   } catch (error) {
     console.error("Weather API Error:", error.message);
