@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default Leaflet icon issue in React
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
@@ -15,7 +14,6 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// --- AUTO-ZOOM COMPONENT --- (DO NOT MODIFY)
 const MapRecenter = ({ points }) => {
   const map = useMap();
   useEffect(() => {
@@ -30,14 +28,13 @@ const MapRecenter = ({ points }) => {
 const TrekMap = ({ itinerary, center = [30.7333, 76.7794] }) => {
   const safeItinerary = Array.isArray(itinerary) ? itinerary : [];
 
-  // COORDINATE FLIP: [lon, lat] from DB → [lat, lon] for Leaflet — DO NOT MODIFY
   const markerDays = safeItinerary
     .filter((day) => Array.isArray(day.coordinates) && day.coordinates.length === 2)
     .map((day) => {
       const [lon, lat] = day.coordinates; // Extract from GeoJSON format
       return {
         ...day,
-        leafletCoords: [lat, lon] // Create Leaflet-ready [Lat, Lon]
+        leafletCoords: [lat, lon] 
       };
     });
 

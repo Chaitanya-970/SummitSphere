@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { FileText, Loader2 } from 'lucide-react';
 
-// --- DETERMINISTIC IMAGE HASH (DO NOT MODIFY) ---
+
 const TREK_IMAGES = [
   "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80",
   "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?w=1200&q=80",
@@ -27,7 +27,6 @@ const getTrekImage = (trekName, originalImage) => {
 const TrekPDF = ({ trek }) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // --- VERIFIED CORS LOGIC — DO NOT REFACTOR ---
   const getBase64ImageFromURL = (url) =>
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -49,8 +48,6 @@ const TrekPDF = ({ trek }) => {
     const doc  = new jsPDF();
     const W    = doc.internal.pageSize.getWidth();
     const H    = doc.internal.pageSize.getHeight();
-
-    // Palette
     const forest    = [45, 106, 79];
     const darkGreen = [13, 26, 20];
     const ink       = [26, 18, 8];
@@ -58,7 +55,6 @@ const TrekPDF = ({ trek }) => {
     const parchment = [242, 237, 228];
     const white     = [255, 255, 255];
 
-    // ── helpers ────────────────────────────────────────────
     const footer = (pageNum, total) => {
       doc.setFillColor(...parchment);
       doc.rect(0, H - 10, W, 10, 'F');
@@ -84,7 +80,6 @@ const TrekPDF = ({ trek }) => {
       doc.text(title, 14, 21);
     };
 
-    // Inline stat pill (no table)
     const pill = (x, y, w, label, value) => {
       doc.setFillColor(...parchment);
       doc.roundedRect(x, y, w, 17, 2.5, 2.5, 'F');
@@ -98,7 +93,6 @@ const TrekPDF = ({ trek }) => {
       doc.text(String(value), x + w / 2, y + 13, { align: 'center' });
     };
 
-    // Decorative horizontal rule
     const rule = (y) => {
       doc.setDrawColor(...forest);
       doc.setLineWidth(0.3);
@@ -106,17 +100,12 @@ const TrekPDF = ({ trek }) => {
     };
 
     try {
-      // ══════════════════════════════════════════════════
-      // PAGE 1 — COVER + EXPEDITION BRIEF
-      // ══════════════════════════════════════════════════
 
-      // Hero image — full bleed top half
       try {
         const b64 = await getBase64ImageFromURL(getTrekImage(trek.name, trek.imageUrl));
         doc.addImage(b64, 'JPEG', 0, 0, W, 96, undefined, 'FAST');
       } catch (e) { console.warn('Image skipped', e); }
 
-      // Dark scrim over bottom of image
       doc.setFillColor(...darkGreen);
       for (let i = 0; i < 36; i++) {
         doc.setGState(new doc.GState({ opacity: i / 36 }));
@@ -124,7 +113,7 @@ const TrekPDF = ({ trek }) => {
       }
       doc.setGState(new doc.GState({ opacity: 1 }));
 
-      // Trek name overlaid on image
+
       doc.setFont('helvetica', 'bolditalic');
       doc.setFontSize(28);
       doc.setTextColor(...white);
@@ -134,7 +123,6 @@ const TrekPDF = ({ trek }) => {
       doc.setTextColor(190, 225, 205);
       doc.text(`${trek.state}  ·  ${trek.difficulty}  ·  ${trek.duration} Days  ·  ${trek.maxAltitude} ft`, 14, 92);
 
-      // Brand bar
       doc.setFillColor(...forest);
       doc.rect(0, 96, W, 8, 'F');
       doc.setFont('helvetica', 'bold');
@@ -145,7 +133,6 @@ const TrekPDF = ({ trek }) => {
       doc.setTextColor(190, 225, 205);
       doc.text(`OFFICIAL EXPEDITION FIELD MANUAL  ·  REF: ${trek._id?.slice(-8).toUpperCase() || 'SSPM'}`, 54, 101.5);
 
-      // ── STAT PILLS (no table) ──────────────────────────
       const pillW = (W - 28 - 9) / 4;
       [
         { label: 'MAX ALTITUDE', value: `${trek.maxAltitude} ft` },
@@ -154,7 +141,6 @@ const TrekPDF = ({ trek }) => {
         { label: 'STATE',        value: trek.state.split(' ')[0] },
       ].forEach((s, i) => pill(14 + i * (pillW + 3), 108, pillW, s.label, s.value));
 
-      // ── DESCRIPTION ───────────────────────────────────
       let y = 135;
       doc.setFont('helvetica', 'bolditalic');
       doc.setFontSize(13);
@@ -171,7 +157,6 @@ const TrekPDF = ({ trek }) => {
       doc.text(descLines, 14, y);
       y += descLines.length * 5.2 + 10;
 
-      // ── AT A GLANCE — visual cards, NO table ──────────
       doc.setFont('helvetica', 'bolditalic');
       doc.setFontSize(13);
       doc.setTextColor(...ink);
@@ -186,7 +171,6 @@ const TrekPDF = ({ trek }) => {
         { label: 'GROUP',    text: trek.groupSize ? `Recommended group size: ${trek.groupSize}` : 'Small-batch groups for a premium experience' },
       ];
 
-      // Two columns of glance cards
       const cardW = (W - 28 - 6) / 2;
       glances.forEach((g, i) => {
         const col = i % 2;
@@ -213,7 +197,6 @@ const TrekPDF = ({ trek }) => {
       });
       y += Math.ceil(glances.length / 2) * 18 + 6;
 
-      // ── TRIP DETAILS — clean label/value pairs, NO table ──
       if (trek.startPoint || trek.endPoint || trek.groupSize) {
         y += 4;
         doc.setFont('helvetica', 'bolditalic');
@@ -249,9 +232,6 @@ const TrekPDF = ({ trek }) => {
         });
       }
 
-      // ══════════════════════════════════════════════════
-      // PAGE 2 — ITINERARY (no table — custom rows)
-      // ══════════════════════════════════════════════════
       doc.addPage();
       pageHeader('DAY-BY-DAY ITINERARY');
 
@@ -307,9 +287,7 @@ const TrekPDF = ({ trek }) => {
         });
       }
 
-      // ══════════════════════════════════════════════════
-      // PAGE 3 — PACKING LIST (no table)
-      // ══════════════════════════════════════════════════
+
       doc.addPage();
       pageHeader('WHAT TO PACK');
 
@@ -324,7 +302,7 @@ const TrekPDF = ({ trek }) => {
       ];
 
       let py = 36;
-      packingList.forEach((section, si) => {
+      packingList.forEach((section) => {
         if (py + 30 > H - 16) { doc.addPage(); pageHeader('WHAT TO PACK (CONT.)'); py = 36; }
 
         // Section header bar
@@ -355,9 +333,6 @@ const TrekPDF = ({ trek }) => {
         py += Math.ceil(section.items.length / 2) * 9 + 6;
       });
 
-      // ══════════════════════════════════════════════════
-      // PAGE 4 — SAFETY & MEDICAL
-      // ══════════════════════════════════════════════════
       doc.addPage();
       pageHeader('SAFETY & MEDICAL');
 
@@ -400,9 +375,6 @@ const TrekPDF = ({ trek }) => {
         theme: 'striped',
       });
 
-      // ══════════════════════════════════════════════════
-      // PAGE 5 — RESPONSIBLE TREKKING
-      // ══════════════════════════════════════════════════
       doc.addPage();
       pageHeader('RESPONSIBLE TREKKING');
 
@@ -437,7 +409,6 @@ const TrekPDF = ({ trek }) => {
         ey += 20;
       });
 
-      // ── Write footers across all pages ────────────────
       const total = doc.internal.getNumberOfPages();
       for (let i = 1; i <= total; i++) {
         doc.setPage(i);
