@@ -1,27 +1,50 @@
-const nodemailer = require('nodemailer');
-const net = require('net');
+// ── EMAIL SERVICE (Brevo / Sendinblue) ───────────────────────────────────────
+// Brevo works without a verified domain — you can send from any Gmail address.
+// Free tier: 300 emails/day.
+//
+// Setup:
+//   1. Sign up at brevo.com
+//   2. Go to SMTP & API → API Keys → Generate a new API key
+//   3. Add to Render environment variables:
+//        BREVO_API_KEY=your_api_key_here
+//        EMAIL_FROM_NAME=SummitSphere
+//        EMAIL_FROM_ADDRESS=your-gmail@gmail.com
+//        FRONTEND_URL=https://summitsphere-gamma.vercel.app
 
-const SITE_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const SITE_URL   = process.env.FRONTEND_URL    || 'https://summitsphere-gamma.vercel.app';
+const API_KEY    = process.env.BREVO_API_KEY;
+const FROM_NAME  = process.env.EMAIL_FROM_NAME    || 'SummitSphere';
+const FROM_EMAIL = process.env.EMAIL_FROM_ADDRESS || process.env.EMAIL_USER;
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  family: 4,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  }
-});
+if (!API_KEY) {
+  console.warn('⚠️  BREVO_API_KEY not set — emails will be skipped');
+} else {
+  console.log('📧 Email ready via Brevo →', FROM_EMAIL);
+}
 
-transporter.verify((err) => {
-  if (err) {
-    console.error('Email error:', err.message);
-  } else {
-    console.log('Email ready ->', process.env.EMAIL_USER);
-  }
-});
+const sendEmail = async ({ to, subject, html }) => {
+  if (!API_KEY) { console.warn('Email skipped — no BREVO_API_KEY'); return; }
 
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      sender: { name: FROM_NAME, email: FROM_EMAIL },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || JSON.stringify(data));
+  return data;
+};
+
+// ── LAYOUT ───────────────────────────────────────────────────────────────────
 const emailLayout = (body) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -56,10 +79,10 @@ const emailLayout = (body) => `
 </body>
 </html>`;
 
+// ── WELCOME ──────────────────────────────────────────────────────────────────
 const sendWelcomeEmail = async (userEmail, userName) => {
   try {
-    await transporter.sendMail({
-      from: `"SummitSphere" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: userEmail,
       subject: 'Welcome to SummitSphere 🏔️',
       html: emailLayout(`
@@ -68,35 +91,43 @@ const sendWelcomeEmail = async (userEmail, userName) => {
         <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
           ${['Discover 25+ verified Himalayan treks','Save treks to your personal radar','Download field manuals as PDF','Write reviews and share experiences'].map(f => `
           <tr><td style="padding:8px 0;border-bottom:1px solid #ede8df;">
-            <span style="font-size:16px;margin-right:10px;">•</span>
+            <span style="font-size:16px;margin-right:10px;">✓</span>
             <span style="font-size:14px;color:#4a3f2f;font-weight:600;">${f}</span>
           </td></tr>`).join('')}
         </table>
         <a href="${SITE_URL}" style="display:inline-block;padding:13px 28px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">Explore Treks →</a>
       `),
     });
-    console.log('Welcome email sent to', userEmail);
+    console.log('✅ Welcome email sent to', userEmail);
   } catch (err) {
-    console.error('Welcome email failed:', err.message);
+    console.error('❌ Welcome email failed:', err.message);
   }
 };
 
+// ── BOOKING ──────────────────────────────────────────────────────────────────
 const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {}) => {
   const { duration, difficulty, maxAltitude, trekDate, groupSize } = trekDetails;
-  const formattedDate = trekDate ? new Date(trekDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'TBD';
+  const formattedDate = trekDate
+    ? new Date(trekDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+    : 'TBD';
   try {
-    await transporter.sendMail({
-      from: `"SummitSphere" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: userEmail,
       subject: `Booking Confirmed — ${trekName} 🏔️`,
       html: emailLayout(`
         <div style="display:inline-block;padding:4px 12px;background:#d8f3dc;border-radius:20px;margin-bottom:16px;">
-          <span style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#2d6a4f;">Booking Confirmed</span>
+          <span style="font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#2d6a4f;">Booking Confirmed ✓</span>
         </div>
         <h2 style="font-family:Georgia,serif;font-style:italic;font-weight:900;font-size:26px;color:#1a1208;margin:0 0 4px;">${trekName}</h2>
         <p style="font-size:14px;color:#8c7b65;margin:0 0 24px;">Hi ${userName}, your slot has been logged.</p>
         <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f0e8;border-radius:12px;padding:20px;margin-bottom:24px;">
-          ${[['Trek Date',formattedDate],['Duration',duration?`${duration} Days`:'—'],['Difficulty',difficulty||'—'],['Max Altitude',maxAltitude?`${maxAltitude} ft`:'—'],['Group Size',groupSize?`${groupSize} people`:'—']].map(([l,v]) => `
+          ${[
+            ['Trek Date', formattedDate],
+            ['Duration', duration ? `${duration} Days` : '—'],
+            ['Difficulty', difficulty || '—'],
+            ['Max Altitude', maxAltitude ? `${maxAltitude} ft` : '—'],
+            ['Group Size', groupSize ? `${groupSize} people` : '—'],
+          ].map(([l,v]) => `
           <tr>
             <td style="padding:7px 0;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#b5a48e;width:140px;">${l}</td>
             <td style="padding:7px 0;font-size:14px;font-weight:700;color:#1a1208;">${v}</td>
@@ -105,16 +136,16 @@ const sendBookingEmail = async (userEmail, userName, trekName, trekDetails = {})
         <a href="${SITE_URL}" style="display:inline-block;padding:12px 24px;background:#2d6a4f;color:white;border-radius:10px;font-weight:700;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;">View on SummitSphere →</a>
       `),
     });
-    console.log('Booking email sent to', userEmail);
+    console.log('✅ Booking email sent to', userEmail);
   } catch (err) {
-    console.error('Booking email failed:', err.message);
+    console.error('❌ Booking email failed:', err.message);
   }
 };
 
+// ── TREK CREATED ─────────────────────────────────────────────────────────────
 const sendTrekCreatedEmail = async (adminEmail, trekName) => {
   try {
-    await transporter.sendMail({
-      from: `"SummitSphere" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: adminEmail,
       subject: `New Trek Submitted — ${trekName}`,
       html: emailLayout(`
@@ -124,14 +155,14 @@ const sendTrekCreatedEmail = async (adminEmail, trekName) => {
       `),
     });
   } catch (err) {
-    console.error('Trek created email failed:', err.message);
+    console.error('❌ Trek created email failed:', err.message);
   }
 };
 
+// ── PASSWORD RESET ────────────────────────────────────────────────────────────
 const sendResetEmail = async (userEmail, userName, resetUrl) => {
   try {
-    await transporter.sendMail({
-      from: `"SummitSphere" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: userEmail,
       subject: 'Reset Your SummitSphere Password',
       html: emailLayout(`
@@ -141,9 +172,9 @@ const sendResetEmail = async (userEmail, userName, resetUrl) => {
         <p style="font-size:12px;color:#b5a48e;margin:16px 0 0;">If you didn't request this, ignore this email.</p>
       `),
     });
-    console.log('Reset email sent to', userEmail);
+    console.log('✅ Reset email sent to', userEmail);
   } catch (err) {
-    console.error('Reset email failed:', err.message);
+    console.error('❌ Reset email failed:', err.message);
   }
 };
 

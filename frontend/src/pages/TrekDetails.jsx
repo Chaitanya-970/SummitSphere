@@ -9,7 +9,7 @@ import WeatherWidget from '../components/WeatherWidget';
 import TrekPDF from '../components/TrekPDF';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-// --- DETERMINISTIC IMAGE HASH (DO NOT MODIFY) ---
+//DETERMINISTIC IMAGE HASH (DO NOT MODIFY) 
 const TREK_IMAGES = [
   "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200&q=80",
   "https://images.unsplash.com/photo-1534880606858-29b0e8a24e8d?w=1200&q=80",
@@ -42,7 +42,7 @@ const StatBlock = ({ icon, label, value, color }) => {
   );
 };
 
-// ── PHOTO LIGHTBOX ──────────────────────────────────────────────────────────
+// PHOTO LIGHTBOX 
 const PhotoLightbox = ({ photos, startIndex, onClose }) => {
   const [current, setCurrent] = React.useState(startIndex);
   const prev = () => setCurrent(i => (i - 1 + photos.length) % photos.length);
@@ -82,7 +82,7 @@ const PhotoLightbox = ({ photos, startIndex, onClose }) => {
   );
 };
 
-// ── REVIEW CARD ──────────────────────────────────────────────────────────────
+// REVIEW CARD
 const ReviewCard = ({ review, user, refresh, setToast, onOpenPhotos }) => {
   if (!review) return null;
   const handleDelete = async () => {
@@ -226,10 +226,40 @@ const TrekDetails = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (error || !trek) return (
+  if (loading) return (
+    <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', transition: 'background 0.3s ease' }}>
+      {/* SKELETON HERO */}
+      <div className="shimmer" style={{ height: 'clamp(340px, 58vh, 560px)', width: '100%' }} />
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 24px' }}>
+        <div style={{ display: 'grid', gap: '32px' }} className="trek-detail-grid">
+          {/* LEFT skeleton */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="shimmer" style={{ height: '28px', borderRadius: '8px', width: '60%' }} />
+            <div className="shimmer" style={{ height: '16px', borderRadius: '8px', width: '100%' }} />
+            <div className="shimmer" style={{ height: '16px', borderRadius: '8px', width: '90%' }} />
+            <div className="shimmer" style={{ height: '16px', borderRadius: '8px', width: '80%' }} />
+            <div className="shimmer" style={{ height: '200px', borderRadius: '14px', marginTop: '8px' }} />
+          </div>
+          {/* RIGHT skeleton */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="shimmer" style={{ height: '180px', borderRadius: '14px' }} />
+            <div className="shimmer" style={{ height: '120px', borderRadius: '14px' }} />
+            <div className="shimmer" style={{ height: '80px', borderRadius: '14px' }} />
+          </div>
+        </div>
+      </div>
+      <style>{`
+        @media (min-width: 1024px) {
+          .trek-detail-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important; }
+        }
+      `}</style>
+    </div>
+  );
+
+  if (error && !loading) return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)', padding: '24px', textAlign: 'center' }}>
       <AlertTriangle size={52} style={{ color: 'var(--accent-rose)', marginBottom: '18px' }} />
-      <h2 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '26px', color: 'var(--text-primary)', marginBottom: '16px' }}>{error || 'Trek not found'}</h2>
+      <h2 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '26px', color: 'var(--text-primary)', marginBottom: '16px' }}>{error}</h2>
       <button onClick={() => navigate('/')} style={{ padding: '11px 26px', background: 'var(--accent-green)', color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 700, fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Back to Home</button>
     </div>
   );
@@ -243,7 +273,7 @@ const TrekDetails = () => {
         </div>
       )}
 
-      {/* HERO — parallax via CSS */}
+      {/* HERO  */}
       <div style={{ position: 'relative', height: 'clamp(340px, 58vh, 560px)', overflow: 'hidden', background: 'var(--bg-secondary)' }}>
         {/* Skeleton behind image until loaded */}
         <div className="shimmer" style={{ position: 'absolute', inset: 0 }} />
@@ -287,7 +317,7 @@ const TrekDetails = () => {
       <main style={{ maxWidth: '1280px', margin: '0 auto', padding: '36px 24px 80px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '28px' }} className="trek-detail-grid">
 
-          {/* LEFT COLUMN */}
+          {/* LEFT COLUMN  */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
 
             {/* OWNER CONTROLS */}
@@ -355,7 +385,7 @@ const TrekDetails = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDEBAR */}
+          {/* RIGHT SIDEBAR  */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
             {/* WEATHER */}
@@ -389,10 +419,10 @@ const TrekDetails = () => {
               </div>
             </div>
 
-            {/*  BEST SEASON  */}
+            {/* BEST SEASON */}
             <BestSeasonCard state={trek.state} />
 
-            {/* READY TO TREK CTA  */}
+            {/* READY TO TREK CTA*/}
             <div style={{ background: 'linear-gradient(160deg, #0d1a14 0%, #1a3a2a 100%)', borderRadius: '16px', padding: '22px', color: 'white', border: '1px solid #2d6a4f40' }}>
               <h4 style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 900, fontSize: '20px', marginBottom: '6px', lineHeight: 1.1 }}>Ready to Trek?</h4>
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '12px', marginBottom: '16px', lineHeight: 1.55 }}>
@@ -442,7 +472,6 @@ const DetailRow = ({ label, value }) => (
   </div>
 );
 
-// Best season lookup by state — purely informational, no backend needed
 const SEASON_MAP = {
   'Uttarakhand':       { months: 'Apr – Jun  ·  Sep – Nov', note: 'Avoid monsoon (Jul–Aug) on high passes' },
   'Himachal Pradesh':  { months: 'May – Jun  ·  Sep – Oct', note: 'Winter treks possible Dec–Feb at lower altitudes' },
