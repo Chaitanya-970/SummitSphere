@@ -4,6 +4,7 @@ import { Search, MapPin, Loader2, ChevronDown } from 'lucide-react';
 /* ─── Custom Dropdown (mobile only) ──────────────────────────────────────── */
 const CustomSelect = ({ value, onChange, options, placeholder }) => {
   const [open, setOpen] = useState(false);
+  const [openUp, setOpenUp] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -21,7 +22,14 @@ const CustomSelect = ({ value, onChange, options, placeholder }) => {
       {/* Trigger button */}
       <button
         type="button"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => {
+          if (!open && ref.current) {
+            const rect = ref.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            setOpenUp(spaceBelow < 240);
+          }
+          setOpen(o => !o);
+        }}
         style={{
           width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           background: 'var(--bg-input)', border: '1px solid var(--border-light)',
@@ -39,12 +47,18 @@ const CustomSelect = ({ value, onChange, options, placeholder }) => {
       {/* Dropdown panel — rendered in a portal-like fixed layer to avoid clipping */}
       {open && (
         <div style={{
-          position: 'absolute', top: 'calc(100% + 4px)', left: 0,
+          position: 'absolute',
+          ...(openUp
+            ? { bottom: 'calc(100% + 4px)', top: 'auto' }
+            : { top: 'calc(100% + 4px)', bottom: 'auto' }),
+          left: 0,
           width: '100%', zIndex: 9999,
           background: 'var(--bg-card)',
           border: '1px solid var(--border-light)',
-          borderRadius: '12px', overflow: 'hidden',
+          borderRadius: '12px',
           boxShadow: '0 8px 24px rgba(0,0,0,0.45)',
+          maxHeight: '220px', overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
         }}>
           {options.map((opt, i) => (
             <button
