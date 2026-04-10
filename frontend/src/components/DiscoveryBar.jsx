@@ -57,8 +57,9 @@ const CustomSelect = ({ value, onChange, options, placeholder }) => {
           border: '1px solid var(--border-light)',
           borderRadius: '12px',
           boxShadow: '0 8px 24px rgba(0,0,0,0.45)',
-          maxHeight: '220px', overflowY: 'auto',
+          maxHeight: '260px', overflowY: 'auto',
           WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'thin',
         }}>
           {options.map((opt, i) => (
             <button

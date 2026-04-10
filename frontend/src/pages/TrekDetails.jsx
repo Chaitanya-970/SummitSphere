@@ -31,7 +31,11 @@ const getTrekImage = (trekName, originalImage) => {
 };
 
 const StatBlock = ({ icon, label, value, color }) => {
-  const colors = { emerald: { bg: 'var(--accent-green-bg)', text: 'var(--accent-green)' }, blue: { bg: '#dbeafe', text: '#2563eb' }, purple: { bg: '#ede9fe', text: '#7c3aed' } };
+  const colors = {
+    emerald: { bg: 'var(--accent-green-bg)', text: 'var(--accent-green)' },
+    blue:    { bg: 'var(--accent-green-bg)', text: 'var(--accent-green-light)' },
+    purple:  { bg: 'var(--accent-amber-bg)', text: 'var(--accent-amber)' },
+  };
   const c = colors[color] || colors.emerald;
   return (
     <div style={{ padding: '18px 14px', background: c.bg, borderRadius: '14px', textAlign: 'center', border: `1px solid ${c.text}20` }}>

@@ -81,12 +81,14 @@ const Home = () => {
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', transition: 'background 0.3s ease' }}>
 
       {/* HERO */}
-      <header style={{ position: 'relative', height: 'clamp(420px, 70vh, 640px)', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <header style={{ position: 'relative', height: 'clamp(420px, 70vh, 640px)', overflow: 'visible', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: 0 }}>
         <img
           src={HERO_BG}
           alt="Himalayan peaks"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.04)', transition: 'transform 12s ease' }}
         />
+        </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, var(--bg-primary) 100%)' }} />
 
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 16px', width: '100%', boxSizing: 'border-box' }}>
@@ -141,7 +143,7 @@ const Home = () => {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
             {treks.length > 0 ? (
-              treks.map((trek, i) => (
+              treks.map((trek, ) => (
                 <div key={trek._id} style={{ opacity: 1 }}>
                   <TrekCard trek={{ ...trek, imageUrl: getTrekImage(trek.name, trek.imageUrl) }} />
                 </div>
